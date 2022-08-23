@@ -15,7 +15,7 @@ public class GridData : MonoBehaviour
     {
         if(Instance!=null)
         {
-            Debug.Log("GridData Singleton already exists");
+            Debug.LogWarning("GridData Singleton already exists");
             Destroy(gameObject);
             return;
         }
