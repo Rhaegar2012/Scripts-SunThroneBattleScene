@@ -26,13 +26,13 @@ public class GridData : MonoBehaviour
         List<string> lines=GetTextFromFile();
         SetDimensions(lines,width,height);
         int[,] mapData= new int[width,height];
-        for(int x=0;x<width;x++)
+        for(int y=0;y<height;y++)
         {
-            for(int y=0;y<height;y++)
+            for(int x=0;x<width;x++)
             {
                 if(lines[y].Length>x)
                 {
-                    mapData[x,y]=(int)Char.GetNumericValue(lines[x][y]);
+                    mapData[x,y]=(int)Char.GetNumericValue(lines[y][x]);
                 }
             }
         }
