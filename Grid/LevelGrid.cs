@@ -49,6 +49,10 @@ public class LevelGrid : MonoBehaviour
     {
         return gridSystem.GetHeight();
     }
+    public float GetCellSize()
+    {
+        return gridSystem.GetCellSize();
+    }
     //Unit location methods
     //TODO
 

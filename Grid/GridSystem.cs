@@ -49,4 +49,8 @@ public class GridSystem
     {
         return height;
     }
+    public float GetCellSize()
+    {
+        return cellSize;
+    }
 }

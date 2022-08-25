@@ -15,9 +15,9 @@ public class GridSystemVisual : MonoBehaviour
 
    private void Start()
    {
-        for(int x=0;x<LevelGrid.Instance.GetWidth();x++)
+        for(int x=1;x<LevelGrid.Instance.GetWidth();x++)
         {
-            for(int y=0;y<LevelGrid.Instance.GetHeight();y++)
+            for(int y=1;y<LevelGrid.Instance.GetHeight();y++)
             {
                 Vector2 gridPosition= new Vector2(x,y);
                 GridNode node= LevelGrid.Instance.GetNodeAtPosition(gridPosition);
