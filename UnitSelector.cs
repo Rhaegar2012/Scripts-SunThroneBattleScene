@@ -36,8 +36,8 @@ public class UnitSelector : MonoBehaviour
     public GridNode GetUnitSelectorNode()
     {
         Vector2 currentPosition= transform.position;
-        float currentNodeX= transform.position.x+cellSize;
-        float currentNodeY= transform.position.y+cellSize;
+        float currentNodeX= transform.position.x+cellSize/2;
+        float currentNodeY= transform.position.y+cellSize/2;
         currentNode=LevelGrid.Instance.GetNodeAtPosition(new Vector2(currentNodeX,currentNodeY));
         return currentNode;
         
