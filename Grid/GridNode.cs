@@ -19,6 +19,7 @@ public class GridNode
     private Vector2 position;
     private GridSystem gridSystem;
     private NodeType nodeType;
+    private List<Unit> unitList;
     //Constructor
     public GridNode(Vector2 position, NodeType nodeType)
     {
@@ -34,6 +35,19 @@ public class GridNode
     {
         return nodeType;
     }
+    public void AddUnit(Unit unit)
+    {
+        unitList.Add(unit);
+    }
+    public void RemoveUnit(Unit unit)
+    {
+        unitList.Remove(unit);
+    }
+    public List<Unit> GetUnitList()
+    {
+        return unitList;
+    }
+
 
 
 }

@@ -10,6 +10,8 @@ public class UnitSelector : MonoBehaviour
     //Fields
     private float cellSize;
     private GridNode currentNode;
+    private Vector2 currentGridPosition;
+    private PlayerInputActions playerInput;
     private void Awake()
     {
         if(Instance!=null)
@@ -19,28 +21,49 @@ public class UnitSelector : MonoBehaviour
             return;
         }
         Instance=this;
+        playerInput=new PlayerInputActions();
+        playerInput.Player.Enable();
+        currentGridPosition= new Vector2(0,0);
+        
 
     }
     // Start is called before the first frame update
     void Start()
     {
         cellSize=LevelGrid.Instance.GetCellSize();
+        currentNode=LevelGrid.Instance.GetNodeAtPosition(currentGridPosition);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.anyKeyDown)
+        {
+            UnitSelectorMovement();
+            Debug.Log($"Current Node {currentNode.GetGridPosition().ToString()}");
+        }
+      
     }
-    public GridNode GetUnitSelectorNode()
+    public GridNode UpdateUnitSelectorNode()
     {
-        Vector2 currentPosition= transform.position;
+        currentGridPosition= transform.position;
         float currentNodeX= transform.position.x+cellSize/2;
         float currentNodeY= transform.position.y+cellSize/2;
         currentNode=LevelGrid.Instance.GetNodeAtPosition(new Vector2(currentNodeX,currentNodeY));
         return currentNode;
         
+    }
+
+    public void UnitSelectorMovement()
+    {
+        Vector2 moveAmount = playerInput.Player.SelectorMovement.ReadValue<Vector2>();
+        Vector2 trialPosition=currentNode.GetGridPosition()+moveAmount;
+        if(LevelGrid.Instance.IsValidGridPosition(trialPosition))
+        {
+            transform.position+=new Vector3(moveAmount.x,moveAmount.y,0f);
+            UpdateUnitSelectorNode();
+        }
     }
 
 
