@@ -25,6 +25,7 @@ public class GridNode
     {
         this.position=position;
         this.nodeType=nodeType;
+        unitList=new List<Unit>();
     }
 
     public Vector2 GetGridPosition()
@@ -43,10 +44,26 @@ public class GridNode
     {
         unitList.Remove(unit);
     }
+    public bool HasAnyUnit()
+    {
+        return unitList.Count>0;
+    }
+    public Unit GetUnit()
+    {
+        if(HasAnyUnit())
+        {
+            return unitList[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
     public List<Unit> GetUnitList()
     {
         return unitList;
     }
+
 
 
 

@@ -7,9 +7,21 @@ public class BattleSceneSO : ScriptableObject
 {
 
     [Header("Player Army")]
-    [SerializeField] List<UnitType> playerArmyUnits;
-    [SerializeField] List<Vector2> playerArmyPositions;
+    [SerializeField] private List<UnitType> playerArmyUnits;
+    [SerializeField] private List<Vector2> playerArmyPositions;
     [Header("Enemy Army")]
-    [SerializeField] List<UnitType> enemyArmyUnits;
-    [SerializeField] List<Vector2> enemyArmyPositions;
+    [SerializeField] private List<UnitType> enemyArmyUnits;
+    [SerializeField] private List<Vector2> enemyArmyPositions;
+
+    public void GetBattleUnits(out List<UnitType> playerUnits,out List<UnitType> enemyUnits)
+    {
+         playerUnits=playerArmyUnits; 
+         enemyUnits=enemyArmyUnits;
+    }
+
+    public void GetBattleStartingPositions(out List<Vector2> playerPositions,out List<Vector2> enemyPositions )
+    {
+         playerPositions=playerArmyPositions; 
+         enemyPositions=enemyArmyPositions;
+    }
 }

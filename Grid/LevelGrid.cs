@@ -54,6 +54,29 @@ public class LevelGrid : MonoBehaviour
         return gridSystem.GetCellSize();
     }
     //Unit location methods
-    //TODO
+    public void SetUnitAtGridNode(Vector2 gridPosition,Unit unit)
+    {
+        GridNode node= GetNodeAtPosition(gridPosition);
+        node.AddUnit(unit);
+
+    }
+    public Unit GetUnitAtGridNode(Vector2 gridPosition)
+    {
+        GridNode node= GetNodeAtPosition(gridPosition);
+        Unit unit=node.GetUnit();
+        return unit;
+    }
+    public bool HasAnyUnitAtGridNode(Vector2 gridPosition)
+    {
+        
+        GridNode node= GetNodeAtPosition(gridPosition);
+        return node.HasAnyUnit();
+    }
+    public void RemoveUnitAtGridNode(Vector2 gridPosition,Unit unit)
+    {
+        GridNode node= GetNodeAtPosition(gridPosition);
+        node.RemoveUnit(unit);
+
+    }
 
 }

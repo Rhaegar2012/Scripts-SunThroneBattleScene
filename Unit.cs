@@ -15,7 +15,7 @@ public class Unit : MonoBehaviour
 {
     //Events
     //Fields
-    private int health;
+    private int health=10;
     private int defenseRating;
     private int attackRating;
     private UnitType unitType;
@@ -36,8 +36,7 @@ public class Unit : MonoBehaviour
     {
        //TODO 
     }
-    //Constructor
-    public Unit(int defenseRating,int attackRating,UnitType unitType,bool isEnemy, GridNode gridNode,Sprite unitSprite)
+    public void SetUnitParameters(int defenseRating,int attackRating,UnitType unitType,bool isEnemy, GridNode gridNode,Sprite unitSprite)
     {
         this.defenseRating=defenseRating;
         this.attackRating=attackRating;
@@ -46,6 +45,7 @@ public class Unit : MonoBehaviour
         this.gridNode=gridNode;
         this.unitSprite=unitSprite;
         spriteRenderer=gameObject.GetComponentInChildren(typeof(SpriteRenderer)) as SpriteRenderer;
+        spriteRenderer.sprite=unitSprite;
     }
     public bool IsEnemy()
     {
@@ -59,5 +59,6 @@ public class Unit : MonoBehaviour
     {
         return gridNode.GetGridPosition();
     }
+
 
 }
