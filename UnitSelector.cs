@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class UnitSelector : MonoBehaviour
 {
     //Singleton
     public static UnitSelector Instance {get; private set;}
+    //Events
+
     //Fields
     private float cellSize;
     private GridNode currentNode;
@@ -41,6 +44,7 @@ public class UnitSelector : MonoBehaviour
         if(Input.anyKeyDown)
         {
             UnitSelectorMovement();
+            UnitSelectorActivate();
             Debug.Log($"Current Node {currentNode.GetGridPosition().ToString()}");
         }
       
@@ -64,6 +68,15 @@ public class UnitSelector : MonoBehaviour
             transform.position+=new Vector3(moveAmount.x,moveAmount.y,0f);
             UpdateUnitSelectorNode();
         }
+    }
+    public bool UnitSelectorActivate()
+    {
+        bool isSelectorKeyHeld=playerInput.Player.SelectorActivate.ReadValue<float>()>0.1f;
+        return isSelectorKeyHeld;
+    }
+    public GridNode GetCurrentNode()
+    {
+        return currentNode;
     }
 
 

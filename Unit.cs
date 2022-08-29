@@ -59,6 +59,10 @@ public class Unit : MonoBehaviour
     {
         return gridNode.GetGridPosition();
     }
+    public UnitType GetUnitType()
+    {
+        return unitType;
+    }
 
 
 }

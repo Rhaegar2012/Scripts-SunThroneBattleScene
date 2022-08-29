@@ -82,13 +82,13 @@ public class UnitManager : MonoBehaviour
                     switch(unitType)
                     {
                         case UnitType.Infantry:
-                        unitScript.SetUnitParameters(1,1,unitType,false,unitGridNode,enemyInfantrySprite);
+                        unitScript.SetUnitParameters(1,1,unitType,true,unitGridNode,enemyInfantrySprite);
                         break;
                         case UnitType.LightArmor:
-                        unitScript.SetUnitParameters(5,5,unitType,false,unitGridNode,enemyLightArmorSprite);
+                        unitScript.SetUnitParameters(5,5,unitType,true,unitGridNode,enemyLightArmorSprite);
                         break;
                         case UnitType.MBT:
-                        unitScript.SetUnitParameters(5,5,unitType,false,unitGridNode,enemyMBTSprite);
+                        unitScript.SetUnitParameters(5,5,unitType,true,unitGridNode,enemyMBTSprite);
                         break;
                     }
                     enemyUnitList.Add(unitScript);
