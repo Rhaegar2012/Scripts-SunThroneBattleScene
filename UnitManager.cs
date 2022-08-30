@@ -55,13 +55,13 @@ public class UnitManager : MonoBehaviour
                     switch(unitType)
                     {
                         case UnitType.Infantry:
-                        unitScript.SetUnitParameters(1,1,unitType,false,unitGridNode,playerInfantrySprite);
+                        unitScript.SetUnitParameters(1,1,5,unitType,false,unitGridNode,playerInfantrySprite);
                         break;
                         case UnitType.LightArmor:
-                        unitScript.SetUnitParameters(5,5,unitType,false,unitGridNode,playerLightArmorSprite);
+                        unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerLightArmorSprite);
                         break;
                         case UnitType.MBT:
-                        unitScript.SetUnitParameters(5,5,unitType,false,unitGridNode,playerMBTSprite);
+                        unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerMBTSprite);
                         break;
                     }
                     friendlyUnitList.Add(unitScript);
@@ -82,13 +82,13 @@ public class UnitManager : MonoBehaviour
                     switch(unitType)
                     {
                         case UnitType.Infantry:
-                        unitScript.SetUnitParameters(1,1,unitType,true,unitGridNode,enemyInfantrySprite);
+                        unitScript.SetUnitParameters(1,1,5,unitType,true,unitGridNode,enemyInfantrySprite);
                         break;
                         case UnitType.LightArmor:
-                        unitScript.SetUnitParameters(5,5,unitType,true,unitGridNode,enemyLightArmorSprite);
+                        unitScript.SetUnitParameters(5,5,7,unitType,true,unitGridNode,enemyLightArmorSprite);
                         break;
                         case UnitType.MBT:
-                        unitScript.SetUnitParameters(5,5,unitType,true,unitGridNode,enemyMBTSprite);
+                        unitScript.SetUnitParameters(5,5,7,unitType,true,unitGridNode,enemyMBTSprite);
                         break;
                     }
                     enemyUnitList.Add(unitScript);

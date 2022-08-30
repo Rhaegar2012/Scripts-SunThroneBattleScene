@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour
     private int actionPoints=2;
     private SpriteRenderer spriteRenderer;
     private Sprite unitSprite;
+    private int movementRange;
 
 
     void Start()
@@ -36,7 +37,8 @@ public class Unit : MonoBehaviour
     {
        //TODO 
     }
-    public void SetUnitParameters(int defenseRating,int attackRating,UnitType unitType,bool isEnemy, GridNode gridNode,Sprite unitSprite)
+    public void SetUnitParameters(int defenseRating,int attackRating,int movementRange
+                                    ,UnitType unitType,bool isEnemy, GridNode gridNode,Sprite unitSprite)
     {
         this.defenseRating=defenseRating;
         this.attackRating=attackRating;
@@ -44,6 +46,7 @@ public class Unit : MonoBehaviour
         this.isEnemy=isEnemy;
         this.gridNode=gridNode;
         this.unitSprite=unitSprite;
+        this.movementRange=movementRange;
         spriteRenderer=gameObject.GetComponentInChildren(typeof(SpriteRenderer)) as SpriteRenderer;
         spriteRenderer.sprite=unitSprite;
     }
@@ -62,6 +65,10 @@ public class Unit : MonoBehaviour
     public UnitType GetUnitType()
     {
         return unitType;
+    }
+    public int GetMovementRange()
+    {
+        return movementRange;
     }
 
 

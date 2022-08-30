@@ -69,4 +69,8 @@ public class UnitActionSystem : MonoBehaviour
         selectedUnit=unit;
         OnSelectedUnitChanged?.Invoke(this,EventArgs.Empty);
     }
+    public Unit GetSelectedUnit()
+    {
+        return selectedUnit;
+    }
 }
