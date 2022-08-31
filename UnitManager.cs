@@ -73,9 +73,9 @@ public class UnitManager : MonoBehaviour
         //Place Enemy Units
         if(enemyUnitTypeList.Count>0 && enemyUnitPositions.Count>0 &&enemyUnitTypeList.Count==enemyUnitPositions.Count)
             {
-                for(int i=0;i<playerUnitTypeList.Count;i++)
+                for(int i=0;i<enemyUnitTypeList.Count;i++)
                 {
-                    UnitType unitType= playerUnitTypeList[i];
+                    UnitType unitType= enemyUnitTypeList[i];
                     GridNode unitGridNode= LevelGrid.Instance.GetNodeAtPosition(enemyUnitPositions[i]);
                     Transform newUnit= Instantiate(unitPrefab,unitGridNode.GetGridPosition(),Quaternion.identity);
                     Unit unitScript= newUnit.GetComponent<Unit>(); 

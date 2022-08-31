@@ -24,7 +24,7 @@ public class GridSystemVisual : MonoBehaviour
    [Header("Action Visual")]
    [SerializeField] Transform validMovementNodePrefab;
    [SerializeField] Transform attackNodePrefab;
-   private List<Transform> gridSystemVisualList;
+   private Transform[,] gridSystemVisualArray;
 
    private void Awake()
    {
@@ -39,9 +39,10 @@ public class GridSystemVisual : MonoBehaviour
 
    private void Start()
    {
+        //gridSystemVisual Array
+        gridSystemVisualArray= new Transform[LevelGrid.Instance.GetWidth(),LevelGrid.Instance.GetHeight()];
         //Subscribed events 
         UnitActionSystem.Instance.OnSelectedUnitChanged+=UnitActionSystem_OnSelectedUnitChanged;
-        gridSystemVisualList=new List<Transform>();
         for(int x=0;x<LevelGrid.Instance.GetWidth();x++)
         {
             for(int y=0;y<LevelGrid.Instance.GetHeight();y++)
@@ -67,6 +68,11 @@ public class GridSystemVisual : MonoBehaviour
                         nodeVisual= Instantiate(roadNodePrefab,gridPosition,Quaternion.identity);
                         break;
                 }
+                //Valid Movement transform
+                Transform visualSingle=Instantiate(validMovementNodePrefab,gridPosition,Quaternion.identity) as Transform;
+                gridSystemVisualArray[x,y]=visualSingle;
+                SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
+                renderer.enabled=false;
             }
         }
 
@@ -80,9 +86,9 @@ public class GridSystemVisual : MonoBehaviour
         Unit selectedUnit= UnitActionSystem.Instance.GetSelectedUnit();
         int  movementRange=selectedUnit.GetMovementRange();
         Vector2 unitPosition= selectedUnit.GetUnitPosition();
-        for(int x=(int)unitPosition.x-movementRange;x<(int)unitPosition.x+movementRange;x++)
+        for(int x=-movementRange;x<=movementRange;x++)
         {
-            for(int y=(int)unitPosition.y-movementRange;y<(int)unitPosition.y+movementRange;y++)
+            for(int y=-movementRange;y<=movementRange;y++)
             {
                 Vector2 gridPosition= new Vector2(x,y);
                 if(!LevelGrid.Instance.IsValidGridPosition(gridPosition))
@@ -95,6 +101,7 @@ public class GridSystemVisual : MonoBehaviour
                     if(unitAtNode.IsEnemy())
                     {
                         Instantiate(attackNodePrefab,gridPosition,Quaternion.identity);
+                        continue;
                     }
                     else
                     {
@@ -102,8 +109,14 @@ public class GridSystemVisual : MonoBehaviour
                     }
 
                 }
-                Transform visualSingle=Instantiate(validMovementNodePrefab,gridPosition,Quaternion.identity) as Transform;
-                gridSystemVisualList.Add(visualSingle);
+                int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
+                if(testDistance>movementRange)
+                {
+                    continue;
+                }
+                Transform visualSingle=gridSystemVisualArray[x,y];
+                SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
+                renderer.enabled=true;
             }
         }
    }
@@ -113,14 +126,13 @@ public class GridSystemVisual : MonoBehaviour
    }
    private void HideGridPositions()
    {
-        if(gridSystemVisualList.Count>0)
+        for(int x=0;x<LevelGrid.Instance.GetWidth();x++)
         {
-            foreach(Transform gridVisual in gridSystemVisualList)
+            for(int y=0;y<LevelGrid.Instance.GetHeight();y++)
             {
-                if(gridVisual!=null)
-                {
-                    Destroy(gridVisual.gameObject);
-                }
+                Transform visualSingle=gridSystemVisualArray[x,y];
+                SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
+                renderer.enabled=false;
             }
         }
    }
