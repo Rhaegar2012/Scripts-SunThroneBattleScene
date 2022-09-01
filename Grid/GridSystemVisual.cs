@@ -43,6 +43,8 @@ public class GridSystemVisual : MonoBehaviour
         gridSystemVisualArray= new Transform[LevelGrid.Instance.GetWidth(),LevelGrid.Instance.GetHeight()];
         //Subscribed events 
         UnitActionSystem.Instance.OnSelectedUnitChanged+=UnitActionSystem_OnSelectedUnitChanged;
+        UnitActionSystem.Instance.OnDeselectedUnit+=UnitActionSystem_OnDeselectedUnit;
+        //Creates visualGrid singles
         for(int x=0;x<LevelGrid.Instance.GetWidth();x++)
         {
             for(int y=0;y<LevelGrid.Instance.GetHeight();y++)
@@ -123,6 +125,10 @@ public class GridSystemVisual : MonoBehaviour
    private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs empty)
    {
         UpdateGridVisual();
+   }
+   private void UnitActionSystem_OnDeselectedUnit(object sender, EventArgs empty)
+   {
+        HideGridPositions();
    }
    private void HideGridPositions()
    {

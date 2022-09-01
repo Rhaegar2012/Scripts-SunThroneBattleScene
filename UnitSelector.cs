@@ -78,6 +78,10 @@ public class UnitSelector : MonoBehaviour
     {
         return currentNode;
     }
+    public Vector2 GetGridPosition()
+    {
+        return currentGridPosition;
+    }
 
 
 }

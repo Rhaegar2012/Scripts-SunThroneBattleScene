@@ -9,8 +9,10 @@ public class UnitActionSystem : MonoBehaviour
     public static UnitActionSystem Instance {get; private set;}
     //Events
     public event EventHandler OnSelectedUnitChanged;
+    public event EventHandler OnDeselectedUnit;
     //Fields
     private Unit selectedUnit;
+    private BaseAction baseAction;
     private void Awake()
     {
         if(Instance!=null)
@@ -35,6 +37,8 @@ public class UnitActionSystem : MonoBehaviour
         {
             return;
         }
+        TryHandleSelectedAction();
+
     }
 
     private bool TryHandleUnitSelection()
@@ -42,9 +46,10 @@ public class UnitActionSystem : MonoBehaviour
        if(UnitSelector.Instance.UnitSelectorActivate())
        {
             GridNode selectorCurrentNode=UnitSelector.Instance.GetCurrentNode();
+            Unit nodeUnit=selectorCurrentNode.GetUnit();
             if(selectorCurrentNode.HasAnyUnit())
             {
-                 Unit nodeUnit=selectorCurrentNode.GetUnit();
+                
                  //Unit already selected
                  if(selectedUnit==nodeUnit)
                  {
@@ -59,18 +64,52 @@ public class UnitActionSystem : MonoBehaviour
                  return true;
 
             }
+            Vector2 unitSelectorActionNodePosition= UnitSelector.Instance.GetGridPosition();
+            if(selectedUnit!=null && !baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
+            {
+                DeselectUnit();
+            }
+            
 
        }
        return false;
 
     }
+
+    private void TryHandleSelectedAction()
+    {
+        Vector2 unitSelectorActionNodePosition = UnitSelector.Instance.GetGridPosition();
+        if(UnitSelector.Instance.UnitSelectorActivate() && selectedUnit!=null)
+        {
+            if(baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
+            {
+                //TODO Deploy Action Menu and wrapp take action on menu confirmation
+                baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
+            }
+        }
+    }
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit=unit;
+        SetAction();
         OnSelectedUnitChanged?.Invoke(this,EventArgs.Empty);
+    }
+    private void SetAction()
+    {
+        baseAction=selectedUnit.GetAction();
     }
     public Unit GetSelectedUnit()
     {
         return selectedUnit;
+    }
+    public void ClearBusy()
+    {
+
+    }
+    private void DeselectUnit()
+    {
+        selectedUnit=null;
+        baseAction=null;
+        OnDeselectedUnit?.Invoke(this,EventArgs.Empty);
     }
 }

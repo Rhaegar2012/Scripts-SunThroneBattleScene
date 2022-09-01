@@ -25,6 +25,7 @@ public class Unit : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Sprite unitSprite;
     private int movementRange;
+    private BaseAction action;
 
 
     void Start()
@@ -49,6 +50,7 @@ public class Unit : MonoBehaviour
         this.movementRange=movementRange;
         spriteRenderer=gameObject.GetComponentInChildren(typeof(SpriteRenderer)) as SpriteRenderer;
         spriteRenderer.sprite=unitSprite;
+        this.action=GetComponent<BaseAction>();
     }
     public bool IsEnemy()
     {
@@ -70,6 +72,12 @@ public class Unit : MonoBehaviour
     {
         return movementRange;
     }
+    public BaseAction GetAction()
+    {
+        return action;
+    }
+
+    
 
 
 }
