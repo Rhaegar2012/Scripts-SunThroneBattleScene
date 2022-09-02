@@ -78,5 +78,12 @@ public class LevelGrid : MonoBehaviour
         node.RemoveUnit(unit);
 
     }
+    public void MoveUnitGridPosition(Unit unit, Vector2 startPosition,Vector2 targetPosition)
+    {
+        RemoveUnitAtGridNode(startPosition,unit);
+        SetUnitAtGridNode(targetPosition,unit);
+        GridNode unitNewNode=GetNodeAtPosition(targetPosition);
+        unit.SetUnitNode(unitNewNode);
+    }
 
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MoveAction : BaseAction
 {
+    //Events
+    public static event EventHandler OnAnyUnitMoved;
     //Fields
     [SerializeField] private float moveSpeed;
     private float stoppingDistance=0.1f;
@@ -19,18 +21,24 @@ public class MoveAction : BaseAction
     // Update is called once per frame
     void Update()
     {
-        if(isActive)
+        if(!isActive)
         {
-            float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
-            Vector2 moveDirection=(targetPosition-currentGridPosition).normalized;
-            Debug.Log($"Move direction {moveDirection}");
-            if(distanceToTarget>stoppingDistance)
-            {
-                transform.position+=new Vector3(moveDirection.x,moveDirection.y,0f)*moveSpeed*Time.deltaTime;
+            return;
+        }
+        float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
+        Vector2 moveDirection=(targetPosition-currentGridPosition).normalized;
+        if(distanceToTarget>stoppingDistance)
+        {
+            transform.position+=new Vector3(moveDirection.x,moveDirection.y,0f)*moveSpeed*Time.deltaTime;
+            currentGridPosition=new Vector2(transform.position.x,transform.position.y);
 
-            }
+        }
+        else
+        {
+            transform.position=new Vector2(Mathf.Round(currentGridPosition.x),Mathf.Round(currentGridPosition.y));
             ActionComplete();
         }
+        
     }
     public override string GetActionName()
     {
@@ -68,6 +76,7 @@ public class MoveAction : BaseAction
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
         targetPosition=gridPosition;
+        OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
         ActionStart(onActionComplete);
         //TODO
     }

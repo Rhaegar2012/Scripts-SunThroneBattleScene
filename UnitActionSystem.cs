@@ -46,9 +46,11 @@ public class UnitActionSystem : MonoBehaviour
        if(UnitSelector.Instance.UnitSelectorActivate())
        {
             GridNode selectorCurrentNode=UnitSelector.Instance.GetCurrentNode();
-            Unit nodeUnit=selectorCurrentNode.GetUnit();
+           
             if(selectorCurrentNode.HasAnyUnit())
             {
+                Unit nodeUnit=selectorCurrentNode.GetUnit();
+                Debug.Log($"Unit in node {nodeUnit.GetUnitType()}");
                 
                  //Unit already selected
                  if(selectedUnit==nodeUnit)

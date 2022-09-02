@@ -36,7 +36,12 @@ public class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       //TODO 
+       Vector2 newGridPosition= new Vector2(transform.position.x,transform.position.y);
+       if(newGridPosition!=gridNode.GetGridPosition())
+       {
+            LevelGrid.Instance.MoveUnitGridPosition(this,gridNode.GetGridPosition(),newGridPosition);
+       }
+
     }
     public void SetUnitParameters(int defenseRating,int attackRating,int movementRange
                                     ,UnitType unitType,bool isEnemy, GridNode gridNode,Sprite unitSprite)
@@ -60,8 +65,13 @@ public class Unit : MonoBehaviour
     {
         return gridNode;
     }
+    public void SetUnitNode(GridNode gridNode)
+    {
+        this.gridNode=gridNode;
+    }
     public Vector2 GetUnitPosition()
     {
+        Debug.Log($"Current unit position: {gridNode.GetGridPosition()}");
         return gridNode.GetGridPosition();
     }
     public UnitType GetUnitType()

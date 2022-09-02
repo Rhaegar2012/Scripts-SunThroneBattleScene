@@ -44,6 +44,7 @@ public class GridSystemVisual : MonoBehaviour
         //Subscribed events 
         UnitActionSystem.Instance.OnSelectedUnitChanged+=UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnDeselectedUnit+=UnitActionSystem_OnDeselectedUnit;
+        MoveAction.OnAnyUnitMoved+=MoveAction_OnAnyUnitMoved;
         //Creates visualGrid singles
         for(int x=0;x<LevelGrid.Instance.GetWidth();x++)
         {
@@ -88,9 +89,10 @@ public class GridSystemVisual : MonoBehaviour
         Unit selectedUnit= UnitActionSystem.Instance.GetSelectedUnit();
         int  movementRange=selectedUnit.GetMovementRange();
         Vector2 unitPosition= selectedUnit.GetUnitPosition();
-        for(int x=-movementRange;x<=movementRange;x++)
+        Debug.Log($"Unit Position for grid visual {unitPosition}");
+        for(int x=(int)unitPosition.x-movementRange;x<=(int)movementRange;x++)
         {
-            for(int y=-movementRange;y<=movementRange;y++)
+            for(int y=(int)unitPosition.y-movementRange;y<=(int)unitPosition.y+movementRange;y++)
             {
                 Vector2 gridPosition= new Vector2(x,y);
                 if(!LevelGrid.Instance.IsValidGridPosition(gridPosition))
@@ -127,6 +129,10 @@ public class GridSystemVisual : MonoBehaviour
         UpdateGridVisual();
    }
    private void UnitActionSystem_OnDeselectedUnit(object sender, EventArgs empty)
+   {
+        HideGridPositions();
+   }
+   private void MoveAction_OnAnyUnitMoved(object sender, EventArgs empty)
    {
         HideGridPositions();
    }
