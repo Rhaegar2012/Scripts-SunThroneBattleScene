@@ -26,6 +26,7 @@ public class Unit : MonoBehaviour
     private Sprite unitSprite;
     private int movementRange;
     private BaseAction action;
+    private List<NodeType> walkableNodeTypeList;
 
 
     void Start()
@@ -44,7 +45,8 @@ public class Unit : MonoBehaviour
 
     }
     public void SetUnitParameters(int defenseRating,int attackRating,int movementRange
-                                    ,UnitType unitType,bool isEnemy, GridNode gridNode,Sprite unitSprite)
+                                    ,UnitType unitType,bool isEnemy, GridNode gridNode,
+                                    Sprite unitSprite)
     {
         this.defenseRating=defenseRating;
         this.attackRating=attackRating;
@@ -71,7 +73,6 @@ public class Unit : MonoBehaviour
     }
     public Vector2 GetUnitPosition()
     {
-        Debug.Log($"Current unit position: {gridNode.GetGridPosition()}");
         return gridNode.GetGridPosition();
     }
     public UnitType GetUnitType()
@@ -85,6 +86,34 @@ public class Unit : MonoBehaviour
     public BaseAction GetAction()
     {
         return action;
+    }
+    public void SetWalkableNodeTypes()
+    {
+        switch(unitType)
+        {
+           case UnitType.Infantry:
+                walkableNodeTypeList= new List<NodeType>{NodeType.Grassland,
+                                                         NodeType.Forest,
+                                                         NodeType.Mountain,
+                                                         NodeType.River,
+                                                         NodeType.Road};
+                break;
+            case UnitType.LightArmor:
+                walkableNodeTypeList= new List<NodeType>{NodeType.Grassland,
+                                                         NodeType.Forest,
+                                                         NodeType.Road};
+                break;
+            case UnitType.MBT:
+               walkableNodeTypeList= new List<NodeType>{NodeType.Grassland,
+                                                         NodeType.Forest,
+                                                         NodeType.Road};
+            break;
+               
+        }
+    }
+    public List<NodeType> GetWalkableNodeTypeList()
+    {
+        return walkableNodeTypeList;
     }
 
     

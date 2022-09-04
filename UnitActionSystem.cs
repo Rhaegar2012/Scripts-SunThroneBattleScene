@@ -87,13 +87,17 @@ public class UnitActionSystem : MonoBehaviour
             {
                 //TODO Deploy Action Menu and wrapp take action on menu confirmation
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
+                SetSelectedUnit(null);
             }
         }
     }
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit=unit;
-        SetAction();
+        if(selectedUnit!=null)
+        {
+            SetAction();
+        }
         OnSelectedUnitChanged?.Invoke(this,EventArgs.Empty);
     }
     private void SetAction()

@@ -56,12 +56,15 @@ public class UnitManager : MonoBehaviour
                     {
                         case UnitType.Infantry:
                         unitScript.SetUnitParameters(1,1,5,unitType,false,unitGridNode,playerInfantrySprite);
+                        unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.LightArmor:
                         unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerLightArmorSprite);
+                        unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.MBT:
                         unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerMBTSprite);
+                        unitScript.SetWalkableNodeTypes();
                         break;
                     }
                     friendlyUnitList.Add(unitScript);
@@ -83,12 +86,15 @@ public class UnitManager : MonoBehaviour
                     {
                         case UnitType.Infantry:
                         unitScript.SetUnitParameters(1,1,5,unitType,true,unitGridNode,enemyInfantrySprite);
+                        unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.LightArmor:
                         unitScript.SetUnitParameters(5,5,7,unitType,true,unitGridNode,enemyLightArmorSprite);
+                        unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.MBT:
                         unitScript.SetUnitParameters(5,5,7,unitType,true,unitGridNode,enemyMBTSprite);
+                        unitScript.SetWalkableNodeTypes();
                         break;
                     }
                     enemyUnitList.Add(unitScript);

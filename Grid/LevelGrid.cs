@@ -85,5 +85,10 @@ public class LevelGrid : MonoBehaviour
         GridNode unitNewNode=GetNodeAtPosition(targetPosition);
         unit.SetUnitNode(unitNewNode);
     }
+    public NodeType GetNodeType(Vector2 gridPosition)
+    {
+        GridNode node= GetNodeAtPosition(gridPosition);
+        return node.GetNodeType();
+    }
 
 }
