@@ -89,44 +89,57 @@ public class GridSystemVisual : MonoBehaviour
    {
         HideGridPositions();
         Unit selectedUnit= UnitActionSystem.Instance.GetSelectedUnit();
-        int  movementRange=selectedUnit.GetMovementRange();
-        Vector2 unitPosition= selectedUnit.GetUnitPosition();
-        for(int x=-movementRange;x<=movementRange;x++)
+        if(selectedUnit!=null)
         {
-            for(int y=-movementRange;y<=movementRange;y++)
-            {
+              int  movementRange=selectedUnit.GetMovementRange();
+              Vector2 unitPosition= selectedUnit.GetUnitPosition();
+              for(int x=-movementRange;x<=movementRange;x++)
+              {
+                for(int y=-movementRange;y<=movementRange;y++)
+                {
                 
-                Vector2 offsetGridPosition= new Vector2(x,y);
-                Vector2 testGridPosition=unitPosition+offsetGridPosition;
-                if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
-                {
-                    continue;
-                }
-                if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
-                {
-                    Unit unitAtNode=LevelGrid.Instance.GetUnitAtGridNode(testGridPosition);
-                    if(unitAtNode.IsEnemy())
-                    {
-                        Transform enemyGridVisual=Instantiate(attackNodePrefab,testGridPosition,Quaternion.identity);
-                        enemyGridVisualsList.Add(enemyGridVisual);
-                        continue;
-                    }
-                    else
+                    Vector2 offsetGridPosition= new Vector2(x,y);
+                    Vector2 testGridPosition=unitPosition+offsetGridPosition;
+                    if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
                     {
                         continue;
                     }
+                    GridNode testNode= LevelGrid.Instance.GetNodeAtPosition(testGridPosition);
+                    NodeType testNodeType= testNode.GetNodeType();
+                    List<NodeType> walkableNodeTypes= selectedUnit.GetWalkableNodeTypeList();
+                    if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
+                    {
+                        Unit unitAtNode=LevelGrid.Instance.GetUnitAtGridNode(testGridPosition);
+                        if(unitAtNode.IsEnemy())
+                        {
+                            Transform enemyGridVisual=Instantiate(attackNodePrefab,testGridPosition,Quaternion.identity);
+                            enemyGridVisualsList.Add(enemyGridVisual);
+                            continue;
+                        }
+                        else
+                        {
+                            continue;
+                        }
 
-                }
-                int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
-                if(testDistance>movementRange)
-                {
+                    }
+                    int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
+                  if(testDistance>movementRange)
+                  {
                     continue;
+                  }
+                  if(!walkableNodeTypes.Contains(testNodeType))
+                  {
+                    continue;
+                  }
+
+                    Transform visualSingle=gridSystemVisualArray[(int)testGridPosition.x,(int)testGridPosition.y];
+                    SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
+                    renderer.enabled=true;
                 }
-                Transform visualSingle=gridSystemVisualArray[(int)testGridPosition.x,(int)testGridPosition.y];
-                SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
-                renderer.enabled=true;
-            }
+             }
+
         }
+      
    }
    private void UnitActionSystem_OnSelectedUnitChanged(object sender, EventArgs empty)
    {

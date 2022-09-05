@@ -20,6 +20,10 @@ public class GridNode
     private GridSystem gridSystem;
     private NodeType nodeType;
     private List<Unit> unitList;
+    private int gCost;
+    private int hCost;
+    private int fCost;
+    private GridNode previousNode;
     //Constructor
     public GridNode(Vector2 position, NodeType nodeType)
     {
@@ -62,6 +66,42 @@ public class GridNode
     public List<Unit> GetUnitList()
     {
         return unitList;
+    }
+    public int GetGCost()
+    {
+        return gCost;
+    }
+    public int GetHCost()
+    {
+        return hCost;
+    }
+    public int GetFCost()
+    {
+        return fCost;
+    }
+    public void SetGCost(int gCost)
+    {
+        this.gCost=gCost;
+    }
+    public void SetHCost(int hCost)
+    {
+        this.hCost=hCost;
+    }
+    public void CalculateFCost()
+    {
+        fCost=gCost+hCost;
+    }
+    public GridNode GetPreviousNode()
+    {
+        return previousNode;
+    }
+    public void SetPreviousNode(GridNode previousNode)
+    {
+        this.previousNode=previousNode;
+    }
+    public void ResetPreviousNode()
+    {
+        previousNode=null;
     }
 
 

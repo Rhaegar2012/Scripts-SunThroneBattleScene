@@ -59,11 +59,18 @@ public class MoveAction : BaseAction
                 {
                     continue;
                 }
+                GridNode testNode= LevelGrid.Instance.GetNodeAtPosition(testGridPosition);
+                NodeType testNodeType= testNode.GetNodeType();
+                List<NodeType> walkableNodeTypes= unit.GetWalkableNodeTypeList();
                 if(testGridPosition==unitGridPosition)
                 {
                     continue;
                 }
                 if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
+                {
+                    continue;
+                }
+                if(!walkableNodeTypes.Contains(testNodeType))
                 {
                     continue;
                 }
