@@ -12,6 +12,8 @@ public class MoveAction : BaseAction
     private float stoppingDistance=0.1f;
     private Vector2 currentGridPosition;
     private Vector2 targetPosition;
+    private int currentIndex;
+    private List<GridNode> pathList;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,8 @@ public class MoveAction : BaseAction
         {
             return;
         }
+        targetPosition=pathList[currentIndex].GetGridPosition();
+        Debug.Log($"Current Node movement:{targetPosition}");
         float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
         Vector2 moveDirection=(targetPosition-currentGridPosition).normalized;
         if(distanceToTarget>stoppingDistance)
@@ -36,6 +40,11 @@ public class MoveAction : BaseAction
         else
         {
             transform.position=new Vector2(Mathf.Round(currentGridPosition.x),Mathf.Round(currentGridPosition.y));
+            currentIndex++;
+            
+        }
+        if(currentIndex>=pathList.Count)
+        {
             ActionComplete();
         }
         
@@ -82,9 +91,11 @@ public class MoveAction : BaseAction
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
-        targetPosition=gridPosition;
+        currentIndex=0;
+        GridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
+        pathList= Pathfinding.Instance.FindPath(unit,GetValidGridPositionList(),targetNode);
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
         ActionStart(onActionComplete);
-        //TODO
+        
     }
 }

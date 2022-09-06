@@ -87,9 +87,9 @@ public class GridNode
     {
         this.hCost=hCost;
     }
-    public void CalculateFCost()
+    public int CalculateFCost()
     {
-        fCost=gCost+hCost;
+        return fCost=gCost+hCost;
     }
     public GridNode GetPreviousNode()
     {

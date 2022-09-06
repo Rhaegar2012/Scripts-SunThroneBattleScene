@@ -7,11 +7,12 @@ public class Pathfinding : MonoBehaviour
     //Singleton
     public static Pathfinding Instance {get; private set;}
     //Fields
-    private List<Vector2> openList;
-    private List<Vector2> closedList;
+    private List<GridNode> openList;
+    private List<GridNode> closedList;
     private int width;
     private int height;
     private const int BASE_MOVEMENT_COST=10;
+    private int pathLength;
 
     void Awake()
     {
@@ -32,16 +33,15 @@ public class Pathfinding : MonoBehaviour
     {
         int movementRange= selectedUnit.GetMovementRange();
         Vector2 startPosition=selectedUnit.GetUnitPosition();
-        Vector2 endPosition=endNode.GetGridPosition();
+        Vector2 endPosition= endNode.GetGridPosition();
         GridNode startNode=LevelGrid.Instance.GetNodeAtPosition(startPosition);
-        GridNode endNode=LevelGrid.Instance.GetNodeAtPosition(endPosition);
-        if(!validGridPositionList.Contains(endNode))
+        if(!validGridPositionList.Contains(endPosition))
         {
             return null; 
         }
-        openList= new List<Vector2>();
-        closedList=new List<Vector2>();
-        openList.Add(startPosition);
+        openList= new List<GridNode>();
+        closedList=new List<GridNode>();
+        openList.Add(startNode);
         for(int x=0; x<width;x++)
         {
             for(int y=0;y<height;y++)
@@ -54,17 +54,102 @@ public class Pathfinding : MonoBehaviour
             }
         }
         startNode.SetGCost(0);
-        startNode.SetHCost(0);
+        startNode.SetHCost(CalculateDistance(startPosition,endPosition));
         startNode.CalculateFCost();
+        while(openList.Count>0)
+        {
+            GridNode currentNode=GetLowestFCostNode(openList);
+            if(currentNode==endNode)
+            {
+                pathLength=currentNode.CalculateFCost();
+                return CalculatePath(endNode);
+            }
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
+            foreach(GridNode neighbor in GetNeighbors(currentNode.GetGridPosition()))
+            {
+                if(closedList.Contains(neighbor))
+                {
+                    continue;
+                }
+                if(!selectedUnit.GetWalkableNodeTypeList().Contains(neighbor.GetNodeType()))
+                {
+                    closedList.Add(neighbor);
+                    continue;
+                }
+                int tentativeGCost=currentNode.GetGCost()+CalculateDistance(currentNode.GetGridPosition(),neighbor.GetGridPosition());
+                if(tentativeGCost<neighbor.GetGCost())
+                {
+                    neighbor.SetPreviousNode(currentNode);
+                    neighbor.SetGCost(tentativeGCost);
+                    neighbor.SetHCost(CalculateDistance(neighbor.GetGridPosition(),endPosition));
+                    neighbor.CalculateFCost();
+                    if(!openList.Contains(neighbor))
+                    {
+                        openList.Add(neighbor);
+                    }
+                }
+
+
+            }
+
+        }
+        //No Path found 
+        pathLength=0;
+        return null;
         
     }
     private int CalculateDistance(Vector2 startPosition,Vector2 endPosition)
     {
-        //TODO
+        int distance=(int)Vector2.Distance(startPosition,endPosition);
+        return distance*BASE_MOVEMENT_COST;
     }
     private GridNode GetLowestFCostNode(List<GridNode> gridNodeList)
     {
-        //TODO
+        int minFCost=int.MaxValue;
+        GridNode minFCostNode=null;
+        foreach(GridNode node in gridNodeList)
+        {
+            int fCost=node.GetFCost();
+            if(fCost<minFCost)
+            {
+                minFCost=fCost;
+                minFCostNode=node;
+            }
+
+        }
+        return minFCostNode;
+    }
+    private List<GridNode> GetNeighbors(Vector2 gridPosition)
+    {
+        List<GridNode> neighborList= new List<GridNode>();
+        List<Vector2> neighborPositions= new List<Vector2> {new Vector2(1,0),
+                                                            new Vector2(-1,0),
+                                                            new Vector2(0,1),
+                                                            new Vector2(0,-1)};
+        foreach(Vector2 offsetPosition in neighborPositions)
+        {
+            Vector2 testPosition=gridPosition+offsetPosition;
+            if(LevelGrid.Instance.IsValidGridPosition(testPosition))
+            {
+                GridNode neighbor=LevelGrid.Instance.GetNodeAtPosition(testPosition);
+                neighborList.Add(neighbor);
+            }
+        }
+        return neighborList;
+
+    }
+    private List<GridNode> CalculatePath(GridNode node)
+    {
+        List<GridNode> pathList=new List<GridNode>();
+        GridNode previousNode=node.GetPreviousNode();
+        while(previousNode!=null)
+        {
+            pathList.Add(previousNode);
+            node=previousNode;
+        }
+        pathList.Reverse();
+        return pathList;
     }
 
 }
