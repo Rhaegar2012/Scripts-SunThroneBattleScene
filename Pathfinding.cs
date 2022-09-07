@@ -37,6 +37,7 @@ public class Pathfinding : MonoBehaviour
         GridNode startNode=LevelGrid.Instance.GetNodeAtPosition(startPosition);
         if(!validGridPositionList.Contains(endPosition))
         {
+    
             return null; 
         }
         openList= new List<GridNode>();
@@ -142,11 +143,12 @@ public class Pathfinding : MonoBehaviour
     private List<GridNode> CalculatePath(GridNode node)
     {
         List<GridNode> pathList=new List<GridNode>();
-        GridNode previousNode=node.GetPreviousNode();
-        while(previousNode!=null)
+        pathList.Add(node);
+        GridNode currentNode=node;
+        while(currentNode.GetPreviousNode()!=null)
         {
-            pathList.Add(previousNode);
-            node=previousNode;
+            pathList.Add(currentNode.GetPreviousNode());
+            currentNode=currentNode.GetPreviousNode();
         }
         pathList.Reverse();
         return pathList;

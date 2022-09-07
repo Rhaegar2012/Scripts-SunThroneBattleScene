@@ -18,6 +18,7 @@ public class MoveAction : BaseAction
     void Start()
     {
         currentGridPosition=unit.GetUnitPosition();
+        pathList=new List<GridNode>();
     }
 
     // Update is called once per frame
@@ -92,6 +93,7 @@ public class MoveAction : BaseAction
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
         currentIndex=0;
+        targetPosition=gridPosition;
         GridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
         pathList= Pathfinding.Instance.FindPath(unit,GetValidGridPositionList(),targetNode);
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
