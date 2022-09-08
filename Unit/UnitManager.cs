@@ -18,7 +18,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField] Sprite enemyLightArmorSprite;
     [SerializeField] Sprite enemyMBTSprite;
 
-    private List<Unit> unitList;
+    private List<Unit> currentUnitList;
     private List<Unit> friendlyUnitList;
     private List<Unit> enemyUnitList;
     private void Awake()
@@ -30,7 +30,7 @@ public class UnitManager : MonoBehaviour
             return;
         }
         Instance=this;
-        unitList= new List<Unit>();
+        currentUnitList= new List<Unit>();
         friendlyUnitList=new List<Unit>();
         enemyUnitList= new List<Unit>();
     }
@@ -68,7 +68,6 @@ public class UnitManager : MonoBehaviour
                         break;
                     }
                     friendlyUnitList.Add(unitScript);
-                    unitList.Add(unitScript);
                     LevelGrid.Instance.SetUnitAtGridNode(unitGridNode.GetGridPosition(),unitScript);
                     
                 }
@@ -98,16 +97,51 @@ public class UnitManager : MonoBehaviour
                         break;
                     }
                     enemyUnitList.Add(unitScript);
-                    unitList.Add(unitScript);
                     LevelGrid.Instance.SetUnitAtGridNode(unitGridNode.GetGridPosition(),unitScript);
                 }
             }
+        currentUnitList=friendlyUnitList;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        foreach(Unit unit in currentUnitList)
+        {
+            if(!unit.UnitCompletedAction())
+            {
+                return;
+            }
+            
+        }
+        SwitchTurn();
     }
+
+    private void SetCurrentUnitList()
+    {
+        if(currentUnitList==friendlyUnitList)
+        {
+            currentUnitList=enemyUnitList;
+        }
+        else
+        {
+            currentUnitList=friendlyUnitList;
+        }
+    }
+    private void SwitchTurn()
+    {
+        SetCurrentUnitList();
+        TurnSystem.Instance.NextTurn();
+    }
+    public List<Unit> GetEnemyUnitList()
+    {
+        return enemyUnitList;
+    }
+    public List<Unit> GetFriendlyUnitList()
+    {
+        return friendlyUnitList;
+    }
+
+
 }

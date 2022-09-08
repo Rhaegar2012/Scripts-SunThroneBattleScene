@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,11 +28,12 @@ public class Unit : MonoBehaviour
     private int movementRange;
     private BaseAction action;
     private List<NodeType> walkableNodeTypeList;
+    private bool actionCompleted=false;
 
 
     void Start()
     {
-        //TODO
+        TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
     }
 
     // Update is called once per frame
@@ -115,7 +117,19 @@ public class Unit : MonoBehaviour
     {
         return walkableNodeTypeList;
     }
-
+    public bool UnitCompletedAction()
+    {
+        return actionCompleted;
+    }
+    public void SetCompletedActionStatus(bool actionStatus)
+    {
+        actionCompleted=actionStatus;
+    }
+    public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
+    {
+        actionCompleted=false;
+    }
+ 
     
 
 

@@ -46,6 +46,7 @@ public class MoveAction : BaseAction
         }
         if(currentIndex>=pathList.Count)
         {
+            unit.SetCompletedActionStatus(true);
             ActionComplete();
         }
         

@@ -10,8 +10,8 @@ public abstract class BaseAction : MonoBehaviour
     protected bool isActive;
     //Action Delegate
     protected Action onActionComplete;
-    public static EventHandler OnAnyActionStarted;
-    public static EventHandler OnAnyActionCompleted;
+    public  EventHandler OnActionStarted;
+    public  EventHandler OnActionCompleted;
     protected virtual void Awake()
     {
         unit=GetComponent<Unit>();
@@ -36,6 +36,6 @@ public abstract class BaseAction : MonoBehaviour
     {
         isActive=false;
         onActionComplete();
-        //TODO OnAnyActionCompleted Invoke
+        OnActionCompleted?.Invoke(this,EventArgs.Empty);
     }
 }
