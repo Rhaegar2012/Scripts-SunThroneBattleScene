@@ -15,6 +15,7 @@ public class UnitSelector : MonoBehaviour
     private GridNode currentNode;
     private Vector2 currentGridPosition;
     private PlayerInputActions playerInput;
+    private bool isActive=true;
     private void Awake()
     {
         if(Instance!=null)
@@ -35,6 +36,7 @@ public class UnitSelector : MonoBehaviour
     {
         cellSize=LevelGrid.Instance.GetCellSize();
         currentNode=LevelGrid.Instance.GetNodeAtPosition(currentGridPosition);
+        TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
         
     }
 
@@ -81,6 +83,11 @@ public class UnitSelector : MonoBehaviour
     public Vector2 GetGridPosition()
     {
         return currentGridPosition;
+    }
+    public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
+    {
+        isActive=!isActive;
+        gameObject.SetActive(isActive);
     }
 
 

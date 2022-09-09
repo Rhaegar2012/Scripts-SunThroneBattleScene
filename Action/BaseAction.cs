@@ -20,6 +20,7 @@ public abstract class BaseAction : MonoBehaviour
     public abstract string GetActionName();
     public abstract void TakeAction(Vector2 gridPosition ,Action onActionComplete);
     public abstract List<Vector2> GetValidGridPositionList();
+    public abstract EnemyAIAction GetEnemyAIAction(Vector2 gridPosition);
     //General functions
     public bool IsValidGridPositionList(Vector2 gridPosition)
     {

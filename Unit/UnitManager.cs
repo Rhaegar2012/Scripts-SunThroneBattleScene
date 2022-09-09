@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,8 +42,11 @@ public class UnitManager : MonoBehaviour
         List<UnitType> enemyUnitTypeList= new List<UnitType>();
         List<Vector2> playerUnitPositions = new List<Vector2>();
         List<Vector2> enemyUnitPositions = new List<Vector2>();
+        //Read battle subscriptable object
         battleSO.GetBattleUnits(out playerUnitTypeList, out enemyUnitTypeList);
         battleSO.GetBattleStartingPositions(out playerUnitPositions, out enemyUnitPositions);
+        //Event Subscription
+        TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
         //Place Player Units
         if(playerUnitTypeList.Count>0 && playerUnitPositions.Count>0 &&playerUnitTypeList.Count==playerUnitPositions.Count)
             {
@@ -131,7 +135,7 @@ public class UnitManager : MonoBehaviour
     }
     private void SwitchTurn()
     {
-        SetCurrentUnitList();
+        
         TurnSystem.Instance.NextTurn();
     }
     public List<Unit> GetEnemyUnitList()
@@ -141,6 +145,10 @@ public class UnitManager : MonoBehaviour
     public List<Unit> GetFriendlyUnitList()
     {
         return friendlyUnitList;
+    }
+    public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
+    {
+        SetCurrentUnitList();
     }
 
 

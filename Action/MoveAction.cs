@@ -101,4 +101,13 @@ public class MoveAction : BaseAction
         ActionStart(onActionComplete);
         
     }
+    public override EnemyAIAction GetEnemyAIAction(Vector2 gridPosition)
+    {
+        //Checks i
+        return new EnemyAIAction
+        {
+            actionValue=1,
+            gridPosition=gridPosition
+        };
+    }
 }
