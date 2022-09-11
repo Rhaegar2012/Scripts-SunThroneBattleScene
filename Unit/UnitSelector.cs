@@ -87,6 +87,10 @@ public class UnitSelector : MonoBehaviour
     public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
     {
         isActive=!isActive;
+        if(isActive)
+        {
+            CameraController.Instance.UpdateFollowingUnit(transform);
+        }
         gameObject.SetActive(isActive);
     }
 

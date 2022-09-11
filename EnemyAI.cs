@@ -67,21 +67,53 @@ public class EnemyAI : MonoBehaviour
     {
         foreach(Unit unit in unitList)
         {
-            if(TryTakeEnemyAIAction(unit,onEnemyAIActionComplete))
+            if(!unit.UnitCompletedAction() && TryTakeEnemyAIAction(unit,onEnemyAIActionComplete))
             {
+                CameraController.Instance.UpdateFollowingUnit(unit.transform);
                 return true;
+            }
+            else
+            {
+                continue;
             }
         }
         return false;
     }
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete)
     {
-        return true;
-
+       BaseAction bestBaseAction=null;
+       EnemyAIAction bestEnemyAIAction=null;
+       foreach(BaseAction baseAction in enemyUnit.GetActionArray())
+       {
+            if(bestEnemyAIAction==null)
+            {
+                bestBaseAction=baseAction;
+                bestEnemyAIAction=baseAction.GetBestEnemyAIAction();
+            }
+            else
+            {
+                EnemyAIAction testEnemyAIAction =baseAction.GetBestEnemyAIAction();
+                if(testEnemyAIAction.actionValue>bestEnemyAIAction.actionValue)
+                {
+                    bestEnemyAIAction=testEnemyAIAction;
+                    bestBaseAction=baseAction;
+                }
+            }
+       }
+       if(bestEnemyAIAction!=null)
+       {
+          bestBaseAction.TakeAction(bestEnemyAIAction.gridPosition,onEnemyAIActionComplete);
+          return true;
+       }
+       else
+       {
+         return false;
+       }
     }
     public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
     {
         Debug.Log("Enemy Turn Starts");
         timer=2f;
+        SetTakingTurn();
     }
 }

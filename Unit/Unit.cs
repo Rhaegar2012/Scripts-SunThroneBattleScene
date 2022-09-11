@@ -27,10 +27,16 @@ public class Unit : MonoBehaviour
     private Sprite unitSprite;
     private int movementRange;
     private BaseAction action;
+    private BaseAction[] actionList;
     private List<NodeType> walkableNodeTypeList;
     private bool actionCompleted=false;
 
 
+    void Awake()
+    {
+        this.actionList=GetComponents<BaseAction>();
+        this.action=GetComponent<BaseAction>();
+    }
     void Start()
     {
         TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
@@ -59,7 +65,8 @@ public class Unit : MonoBehaviour
         this.movementRange=movementRange;
         spriteRenderer=gameObject.GetComponentInChildren(typeof(SpriteRenderer)) as SpriteRenderer;
         spriteRenderer.sprite=unitSprite;
-        this.action=GetComponent<BaseAction>();
+        
+       
     }
     public bool IsEnemy()
     {
@@ -88,6 +95,10 @@ public class Unit : MonoBehaviour
     public BaseAction GetAction()
     {
         return action;
+    }
+    public BaseAction[] GetActionArray()
+    {
+        return actionList;
     }
     public void SetWalkableNodeTypes()
     {
