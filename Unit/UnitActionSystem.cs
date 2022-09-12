@@ -85,7 +85,7 @@ public class UnitActionSystem : MonoBehaviour
         {
             if(baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
             {
-                //TODO Deploy Action Menu and wrapp take action on menu confirmation
+                //TODO Deploy Action Menu and wrap take action on menu confirmation
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
                 SetSelectedUnit(null);
             }
