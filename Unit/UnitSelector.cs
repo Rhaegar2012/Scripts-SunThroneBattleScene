@@ -9,7 +9,6 @@ public class UnitSelector : MonoBehaviour
     //Singleton
     public static UnitSelector Instance {get; private set;}
     //Events
-
     //Fields
     private float cellSize;
     private GridNode currentNode;
@@ -92,6 +91,11 @@ public class UnitSelector : MonoBehaviour
             CameraController.Instance.UpdateFollowingUnit(transform);
         }
         gameObject.SetActive(isActive);
+    }
+
+    public void SetSelectorActive(bool isActive)
+    {
+       gameObject.SetActive(isActive);     
     }
 
 

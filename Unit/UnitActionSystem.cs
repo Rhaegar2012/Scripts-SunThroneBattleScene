@@ -10,6 +10,7 @@ public class UnitActionSystem : MonoBehaviour
     //Events
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnDeselectedUnit;
+    public event EventHandler OnActionPositionSelected;
     //Fields
     private Unit selectedUnit;
     private BaseAction baseAction;
@@ -77,12 +78,21 @@ public class UnitActionSystem : MonoBehaviour
        return false;
 
     }
+    private bool TryHandleActionPositionSelection()
+    {
+        Vector2 unitSelectiorActionNodePosition=UnitSelector.Instance.GetGridPosition();
+        //verify if node is outside of unit movement range
+        //verify if unit selector is active if so , activate unit action menu
+        return false; 
+
+    }
 
     private void TryHandleSelectedAction()
     {
         Vector2 unitSelectorActionNodePosition = UnitSelector.Instance.GetGridPosition();
         if(UnitSelector.Instance.UnitSelectorActivate() && selectedUnit!=null)
         {
+            
             if(baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
             {
                 //TODO Deploy Action Menu and wrap take action on menu confirmation
