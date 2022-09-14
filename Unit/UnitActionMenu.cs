@@ -11,13 +11,13 @@ public class UnitActionMenu : MonoBehaviour
     private bool isActive=false;
     void Start()
     {
-        UnitActionSystem.Instance.OnActionPositionSelected+=UnitSelector_OnActionPositionSelected;
-
+        UnitActionSystem.Instance.OnActionPositionSelected+=UnitActionSystem_OnActionPositionSelected;
     }
 
-    public void UnitSelector_OnActionPositionSelected(object sender, EventArgs empty)
+    public void UnitActionSystem_OnActionPositionSelected(object sender, EventArgs empty)
     {
         isActive=!isActive;
         actionMenu.SetActive(isActive);
     }
+    
 }

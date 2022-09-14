@@ -112,8 +112,7 @@ public class GridSystemVisual : MonoBehaviour
                         Unit unitAtNode=LevelGrid.Instance.GetUnitAtGridNode(testGridPosition);
                         if(unitAtNode.IsEnemy())
                         {
-                            Transform enemyGridVisual=Instantiate(attackNodePrefab,testGridPosition,Quaternion.identity);
-                            enemyGridVisualsList.Add(enemyGridVisual);
+                            DisplayAttackNodes(testGridPosition);
                             continue;
                         }
                         else
@@ -152,6 +151,19 @@ public class GridSystemVisual : MonoBehaviour
    private void MoveAction_OnAnyUnitMoved(object sender, EventArgs empty)
    {
         HideGridPositions();
+   }
+   private void DisplayAttackNodes(Vector2 gridPosition)
+   {
+      List<Vector2> offsetDirections= new List<Vector2>{new Vector2(1f,0f),
+                                                        new Vector2(-1f,0f),
+                                                        new Vector2(0f,1f),
+                                                        new Vector2(0f,-1f)};
+      foreach(Vector2 direction in offsetDirections)
+      {
+        Vector2 attackNodePosition=gridPosition+direction;
+        Transform enemyGridVisual=Instantiate(attackNodePrefab,attackNodePosition,Quaternion.identity);
+        enemyGridVisualsList.Add(enemyGridVisual);
+      }
    }
    private void HideGridPositions()
    {

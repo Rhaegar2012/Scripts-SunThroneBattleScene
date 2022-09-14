@@ -14,6 +14,8 @@ public class UnitActionSystem : MonoBehaviour
     //Fields
     private Unit selectedUnit;
     private BaseAction baseAction;
+    Vector2 actionPosition;
+    private bool isBusy
     private void Awake()
     {
         if(Instance!=null)
@@ -38,7 +40,11 @@ public class UnitActionSystem : MonoBehaviour
         {
             return;
         }
-        TryHandleSelectedAction();
+        if(TryHandleUnitActionMenu())
+        {
+            return;
+        }
+        //TryHandleSelectedAction();
 
     }
 
@@ -78,16 +84,39 @@ public class UnitActionSystem : MonoBehaviour
        return false;
 
     }
-    private bool TryHandleActionPositionSelection()
+    private bool TryHandleUnitActionMenu()
     {
-        Vector2 unitSelectiorActionNodePosition=UnitSelector.Instance.GetGridPosition();
         //verify if node is outside of unit movement range
         //verify if unit selector is active if so , activate unit action menu
+        if(selectedUnit!=null)
+        {
+            actionPosition=UnitSelector.Instance.GetGridPosition();
+            if(actionPosition!=selectedUnit.GetUnitPosition()&&UnitSelector.Instance.UnitSelectorActivate())
+            {
+                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
+                 UnitSelector.Instance.SetSelectorActive(false);
+                 return true;
+            }
+            if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelector.Instance.UnitSelectorActivate())
+            {
+                DeselectUnit();
+                return true;
+            }
+            int testDistance= Mathf.Abs((int)actionPosition.x)+Mathf.Abs((int)actionPosition.y);
+            if(testDistance>selectedUnit.GetMovementRange()&&UnitSelector.Instance.UnitSelectorActivate())
+            {
+                DeselectUnit();
+                return true;
+            }
+           
+
+           
+        }
         return false; 
 
     }
 
-    private void TryHandleSelectedAction()
+    public void TryHandleSelectedAction()
     {
         Vector2 unitSelectorActionNodePosition = UnitSelector.Instance.GetGridPosition();
         if(UnitSelector.Instance.UnitSelectorActivate() && selectedUnit!=null)
@@ -95,8 +124,9 @@ public class UnitActionSystem : MonoBehaviour
             
             if(baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
             {
-                //TODO Deploy Action Menu and wrap take action on menu confirmation
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
+                OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
+                UnitSelector.Instance.SetSelectorActive(true);
                 SetSelectedUnit(null);
             }
         }
@@ -120,7 +150,7 @@ public class UnitActionSystem : MonoBehaviour
     }
     public void ClearBusy()
     {
-
+        isBusy=false;
     }
     private void DeselectUnit()
     {
