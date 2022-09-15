@@ -21,6 +21,8 @@ public class AttackAction : BaseAction
         {
             return;
         }
+        Debug.Log("Attack selected");
+        ActionComplete();
 
     }
     public override string GetActionName()

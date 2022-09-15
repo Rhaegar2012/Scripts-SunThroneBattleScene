@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitActionSystem : MonoBehaviour
 {
@@ -13,9 +14,9 @@ public class UnitActionSystem : MonoBehaviour
     public event EventHandler OnActionPositionSelected;
     //Fields
     private Unit selectedUnit;
-    private BaseAction baseAction;
+    private BaseAction baseAction=null;
     Vector2 actionPosition;
-    private bool isBusy
+    private bool isBusy;
     private void Awake()
     {
         if(Instance!=null)
@@ -116,10 +117,11 @@ public class UnitActionSystem : MonoBehaviour
 
     }
 
-    public void TryHandleSelectedAction()
+    public void TryHandleSelectedAction(Button button)
     {
+        SetAction(button.name);
         Vector2 unitSelectorActionNodePosition = UnitSelector.Instance.GetGridPosition();
-        if(UnitSelector.Instance.UnitSelectorActivate() && selectedUnit!=null)
+        if(selectedUnit!=null)
         {
             
             if(baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
@@ -134,15 +136,12 @@ public class UnitActionSystem : MonoBehaviour
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit=unit;
-        if(selectedUnit!=null)
-        {
-            SetAction();
-        }
+        SetAction("Move");
         OnSelectedUnitChanged?.Invoke(this,EventArgs.Empty);
     }
-    private void SetAction()
+    private void SetAction(string actionName)
     {
-        baseAction=selectedUnit.GetAction();
+        baseAction=selectedUnit.GetAction(actionName);
     }
     public Unit GetSelectedUnit()
     {

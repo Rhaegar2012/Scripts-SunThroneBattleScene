@@ -19,5 +19,11 @@ public class UnitActionMenu : MonoBehaviour
         isActive=!isActive;
         actionMenu.SetActive(isActive);
     }
+    public void CancelActionMenu()
+    {
+        isActive=!isActive;
+        actionMenu.SetActive(isActive);
+        UnitSelector.Instance.SetSelectorActive(true);
+    }
     
 }

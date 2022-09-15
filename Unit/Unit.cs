@@ -26,7 +26,6 @@ public class Unit : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Sprite unitSprite;
     private int movementRange;
-    private BaseAction action;
     private BaseAction[] actionList;
     private List<NodeType> walkableNodeTypeList;
     private bool actionCompleted=false;
@@ -35,7 +34,6 @@ public class Unit : MonoBehaviour
     void Awake()
     {
         this.actionList=GetComponents<BaseAction>();
-        this.action=GetComponent<BaseAction>();
     }
     void Start()
     {
@@ -92,9 +90,14 @@ public class Unit : MonoBehaviour
     {
         return movementRange;
     }
-    public BaseAction GetAction()
+    public BaseAction GetAction(string actionName)
     {
-        return action;
+        for(int i=0;i<actionList.Length;i++)
+        {
+            Debug.Log($"ActionList Elements {actionList[i]}");
+        }
+        BaseAction selectedAction= Array.Find(actionList,action=>action.GetActionName()==actionName);
+        return selectedAction;
     }
     public BaseAction[] GetActionArray()
     {
@@ -131,6 +134,10 @@ public class Unit : MonoBehaviour
     public bool UnitCompletedAction()
     {
         return actionCompleted;
+    }
+    public void SetCompletedAction(bool isComplete)
+    {
+        actionCompleted=isComplete;
     }
     public void SetCompletedActionStatus(bool actionStatus)
     {
