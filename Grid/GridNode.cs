@@ -24,6 +24,7 @@ public class GridNode
     private int hCost;
     private int fCost;
     private GridNode previousNode;
+    private bool attackNode;
     //Constructor
     public GridNode(Vector2 position, NodeType nodeType)
     {
@@ -102,6 +103,14 @@ public class GridNode
     public void ResetPreviousNode()
     {
         previousNode=null;
+    }
+    public bool IsAttackNode()
+    {
+        return attackNode;
+    }
+    public void SetAttackNode(bool isAttackNode)
+    {
+        attackNode=isAttackNode;
     }
 
 

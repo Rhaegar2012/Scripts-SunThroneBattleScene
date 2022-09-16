@@ -46,7 +46,7 @@ public class MoveAction : BaseAction
         }
         if(currentIndex>=pathList.Count)
         {
-            unit.SetCompletedActionStatus(true);
+            unit.SetCompletedAction(true);
             ActionComplete();
         }
         
@@ -106,7 +106,7 @@ public class MoveAction : BaseAction
         //Checks i
         return new EnemyAIAction
         {
-            actionValue=1,
+            actionValue=5,
             gridPosition=gridPosition
         };
     }

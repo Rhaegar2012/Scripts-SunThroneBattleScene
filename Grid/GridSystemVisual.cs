@@ -161,13 +161,15 @@ public class GridSystemVisual : MonoBehaviour
       foreach(Vector2 direction in offsetDirections)
       {
         Vector2 attackNodePosition=gridPosition+direction;
+        GridNode attackNode= LevelGrid.Instance.GetNodeAtPosition(attackNodePosition);
+        attackNode.SetAttackNode(true);
         Transform enemyGridVisual=Instantiate(attackNodePrefab,attackNodePosition,Quaternion.identity);
         enemyGridVisualsList.Add(enemyGridVisual);
       }
    }
    private void HideGridPositions()
    {
-        //Clears unit visual
+        //Clears unit visual and attack nodes
         for(int x=0;x<LevelGrid.Instance.GetWidth();x++)
         {
             for(int y=0;y<LevelGrid.Instance.GetHeight();y++)
@@ -175,6 +177,9 @@ public class GridSystemVisual : MonoBehaviour
                 Transform visualSingle=gridSystemVisualArray[x,y];
                 SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
                 renderer.enabled=false;
+                //Resets attack nodes 
+                GridNode node = LevelGrid.Instance.GetNodeAtPosition(new Vector2(x,y));
+                node.SetAttackNode(false);
             }
         }
         //Clears enemy visuals

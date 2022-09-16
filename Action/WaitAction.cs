@@ -6,16 +6,40 @@ using UnityEngine;
 public class WaitAction : BaseAction
 {
     // Start is called before the first frame update
+    void Update()
+    {
+        if(!isActive)
+        {
+            return;
+        }
+        unit.SetCompletedAction(true);
+        ActionComplete();
 
+    }
     public override string GetActionName()
     {
         return "Wait";
     }
     public override  List<Vector2> GetValidGridPositionList()
     {
-        List<Vector2> validGridPosition= new List<Vector2>();
-        validGridPosition.Add(unit.GetUnitPosition());
-        return validGridPosition;
+        List<Vector2> validGridPositionList= new List<Vector2>();
+        int movementRange=unit.GetMovementRange();
+        for(int x=-movementRange;x<movementRange;x++)
+        {
+            for(int y=-movementRange;y<movementRange;y++)
+            {
+                Vector2 offsetPosition = new Vector2(x,y);
+                Vector2 testPosition=unit.GetUnitPosition()+offsetPosition;
+                if(!LevelGrid.Instance.IsValidGridPosition(testPosition))
+                {
+                    continue;
+                }
+                validGridPositionList.Add(testPosition);
+
+            }
+        }
+        validGridPositionList.Add(unit.GetUnitPosition());
+        return validGridPositionList;
 
     }
     public override EnemyAIAction GetEnemyAIAction(Vector2 gridPosition)
@@ -29,7 +53,6 @@ public class WaitAction : BaseAction
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
         ActionStart(onActionComplete);
-        unit.SetCompletedAction(true);
-        ActionComplete();
+       
     }
 }

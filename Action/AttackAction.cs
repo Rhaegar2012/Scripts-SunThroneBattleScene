@@ -57,7 +57,7 @@ public class AttackAction : BaseAction
         return new EnemyAIAction
         {
             gridPosition=gridPosition,
-            actionValue=10
+            actionValue=0
         };
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)

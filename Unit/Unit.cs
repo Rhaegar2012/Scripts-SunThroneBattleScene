@@ -139,10 +139,6 @@ public class Unit : MonoBehaviour
     {
         actionCompleted=isComplete;
     }
-    public void SetCompletedActionStatus(bool actionStatus)
-    {
-        actionCompleted=actionStatus;
-    }
     public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
     {
         actionCompleted=false;
