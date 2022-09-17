@@ -9,12 +9,14 @@ public class UnitSelector : MonoBehaviour
     //Singleton
     public static UnitSelector Instance {get; private set;}
     //Events
+ 
     //Fields
     private float cellSize;
     private GridNode currentNode;
     private Vector2 currentGridPosition;
     private PlayerInputActions playerInput;
     private bool isActive=true;
+    private bool selectorKeyActive=false;
     private void Awake()
     {
         if(Instance!=null)
@@ -45,7 +47,6 @@ public class UnitSelector : MonoBehaviour
         if(Input.anyKeyDown)
         {
             UnitSelectorMovement();
-            UnitSelectorActivate();
             Debug.Log($"Current Node {currentNode.GetGridPosition().ToString()}");
         }
       
@@ -70,10 +71,14 @@ public class UnitSelector : MonoBehaviour
             UpdateUnitSelectorNode();
         }
     }
-    public bool UnitSelectorActivate()
+    public bool MakeSelection()
     {
-        bool isSelectorKeyHeld=playerInput.Player.SelectorActivate.ReadValue<float>()>0.1f;
-        return isSelectorKeyHeld;
+        return selectorKeyActive;
+    }
+    public void SwitchSelectorStatus()
+    {
+        selectorKeyActive=!selectorKeyActive;
+        
     }
     public GridNode GetCurrentNode()
     {

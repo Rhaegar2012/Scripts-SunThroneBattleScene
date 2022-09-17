@@ -122,15 +122,14 @@ public class GridSystemVisual : MonoBehaviour
 
                     }
                     int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
-                  if(testDistance>movementRange)
-                  {
-                    continue;
-                  }
-                  if(!walkableNodeTypes.Contains(testNodeType))
-                  {
-                    continue;
-                  }
-
+                    if(testDistance>movementRange)
+                    {
+                        continue;
+                    }
+                    if(!walkableNodeTypes.Contains(testNodeType))
+                    {
+                         continue;
+                    }
                     Transform visualSingle=gridSystemVisualArray[(int)testGridPosition.x,(int)testGridPosition.y];
                     SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
                     renderer.enabled=true;
@@ -161,6 +160,10 @@ public class GridSystemVisual : MonoBehaviour
       foreach(Vector2 direction in offsetDirections)
       {
         Vector2 attackNodePosition=gridPosition+direction;
+        if(!LevelGrid.Instance.IsValidGridPosition(attackNodePosition))
+        {
+            continue;
+        }
         GridNode attackNode= LevelGrid.Instance.GetNodeAtPosition(attackNodePosition);
         attackNode.SetAttackNode(true);
         Transform enemyGridVisual=Instantiate(attackNodePrefab,attackNodePosition,Quaternion.identity);

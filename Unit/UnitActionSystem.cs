@@ -37,8 +37,13 @@ public class UnitActionSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!UnitSelector.Instance.MakeSelection())
+        {
+            return;
+        }
         if(TryHandleUnitSelection())
         {
+            UnitSelector.Instance.SwitchSelectorStatus();
             return;
         }
         if(TryHandleUnitActionMenu())
@@ -48,40 +53,41 @@ public class UnitActionSystem : MonoBehaviour
         //TryHandleSelectedAction();
 
     }
-
+ 
     private bool TryHandleUnitSelection()
     {
-       if(UnitSelector.Instance.UnitSelectorActivate())
-       {
-            GridNode selectorCurrentNode=UnitSelector.Instance.GetCurrentNode();
+        GridNode selectorCurrentNode=UnitSelector.Instance.GetCurrentNode();
            
-            if(selectorCurrentNode.HasAnyUnit())
-            {
-                Unit nodeUnit=selectorCurrentNode.GetUnit();
-                Debug.Log($"Unit in node {nodeUnit.GetUnitType()}");
+        if(selectorCurrentNode.HasAnyUnit())
+        {
+            Unit nodeUnit=selectorCurrentNode.GetUnit();
+            //Debug.Log($"Unit in node {nodeUnit.GetUnitType()}");
                 
-                 //Unit already selected
-                 if(selectedUnit==nodeUnit)
-                 {
-                    return false;
-                 }
-                 //Unit is an enemy;
-                 if(nodeUnit.IsEnemy())
-                 {
-                    return false;
-                 }
-                 SetSelectedUnit(nodeUnit);
-                 return true;
-
-            }
-            Vector2 unitSelectorActionNodePosition= UnitSelector.Instance.GetGridPosition();
-            if(selectedUnit!=null && !baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
+            //Unit already selected
+            if(selectedUnit==nodeUnit)
             {
-                DeselectUnit();
+                return false;
             }
-            
+            //Unit has already completed action
+            if(nodeUnit.UnitCompletedAction())
+            {
+                return false;
+            }
+            //Unit is an enemy;
+            if(nodeUnit.IsEnemy())
+            {
+                return false;
+            }
+            SetSelectedUnit(nodeUnit);
+            return true;
 
-       }
+        }
+        Vector2 unitSelectorActionNodePosition= UnitSelector.Instance.GetGridPosition();
+        if(selectedUnit!=null && !baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
+        {
+            DeselectUnit();
+        }
+      
        return false;
 
     }
@@ -92,19 +98,19 @@ public class UnitActionSystem : MonoBehaviour
         if(selectedUnit!=null)
         {
             actionPosition=UnitSelector.Instance.GetGridPosition();
-            if(actionPosition!=selectedUnit.GetUnitPosition()&&UnitSelector.Instance.UnitSelectorActivate())
+            if(actionPosition!=selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
             {
                  OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
                  UnitSelector.Instance.SetSelectorActive(false);
                  return true;
             }
-            if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelector.Instance.UnitSelectorActivate())
+            if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
             {
                 DeselectUnit();
                 return true;
             }
             int testDistance= Mathf.Abs((int)actionPosition.x)+Mathf.Abs((int)actionPosition.y);
-            if(testDistance>selectedUnit.GetMovementRange()&&UnitSelector.Instance.UnitSelectorActivate())
+            if(testDistance>selectedUnit.GetMovementRange()&&UnitSelector.Instance.MakeSelection())
             {
                 DeselectUnit();
                 return true;
@@ -135,8 +141,13 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void SetSelectedUnit(Unit unit)
     {
+        Debug.Log("Unit was selected");
         selectedUnit=unit;
-        SetAction("Move");
+        if(selectedUnit!=null)
+        {
+            SetAction("Move");
+        }
+        
         OnSelectedUnitChanged?.Invoke(this,EventArgs.Empty);
     }
     private void SetAction(string actionName)

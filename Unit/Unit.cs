@@ -92,10 +92,6 @@ public class Unit : MonoBehaviour
     }
     public BaseAction GetAction(string actionName)
     {
-        for(int i=0;i<actionList.Length;i++)
-        {
-            Debug.Log($"ActionList Elements {actionList[i]}");
-        }
         BaseAction selectedAction= Array.Find(actionList,action=>action.GetActionName()==actionName);
         return selectedAction;
     }
