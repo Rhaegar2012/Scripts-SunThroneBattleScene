@@ -141,7 +141,6 @@ public class UnitActionSystem : MonoBehaviour
     }
     private void SetSelectedUnit(Unit unit)
     {
-        Debug.Log("Unit was selected");
         selectedUnit=unit;
         if(selectedUnit!=null)
         {

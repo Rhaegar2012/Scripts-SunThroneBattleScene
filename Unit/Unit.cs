@@ -16,24 +16,24 @@ public class Unit : MonoBehaviour
 {
     //Events
     //Fields
-    private int health=10;
     private int defenseRating;
     private int attackRating;
     private UnitType unitType;
     private bool isEnemy;
     private GridNode gridNode;
-    private int actionPoints=2;
     private SpriteRenderer spriteRenderer;
     private Sprite unitSprite;
     private int movementRange;
     private BaseAction[] actionList;
     private List<NodeType> walkableNodeTypeList;
     private bool actionCompleted=false;
+    private UnitHealthSystem healthSystem;
 
 
     void Awake()
     {
         this.actionList=GetComponents<BaseAction>();
+        this.healthSystem=GetComponent<UnitHealthSystem>();
     }
     void Start()
     {
@@ -122,6 +122,10 @@ public class Unit : MonoBehaviour
             break;
                
         }
+    }
+    public void Damage()
+    {
+        healthSystem.Damage();
     }
     public List<NodeType> GetWalkableNodeTypeList()
     {

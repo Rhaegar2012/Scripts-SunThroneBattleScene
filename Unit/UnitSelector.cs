@@ -47,7 +47,7 @@ public class UnitSelector : MonoBehaviour
         if(Input.anyKeyDown)
         {
             UnitSelectorMovement();
-            Debug.Log($"Current Node {currentNode.GetGridPosition().ToString()}");
+            //Debug.Log($"Current Node {currentNode.GetGridPosition().ToString()}");
         }
       
     }

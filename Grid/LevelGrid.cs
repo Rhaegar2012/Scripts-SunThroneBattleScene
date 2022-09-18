@@ -28,7 +28,7 @@ public class LevelGrid : MonoBehaviour
 
     void Start()
     {
-        //TODO
+        UnitHealthSystem.OnAnyUnitDestroyed+=UnitHealthSystem_OnUnitDestroyed;
     }
 
     //Callbacks to GridSystem 
@@ -89,6 +89,11 @@ public class LevelGrid : MonoBehaviour
     {
         GridNode node= GetNodeAtPosition(gridPosition);
         return node.GetNodeType();
+    }
+    public void UnitHealthSystem_OnUnitDestroyed(object sender, Unit unit)
+    {
+        Vector2 unitPosition= unit.GetUnitPosition();
+        RemoveUnitAtGridNode(unitPosition,unit);
     }
 
 }

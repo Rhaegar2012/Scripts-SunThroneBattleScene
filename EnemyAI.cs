@@ -85,6 +85,7 @@ public class EnemyAI : MonoBehaviour
        EnemyAIAction bestEnemyAIAction=null;
        foreach(BaseAction baseAction in enemyUnit.GetActionArray())
        {
+            Debug.Log($"Base Action {baseAction.GetActionName()}");
             if(bestEnemyAIAction==null)
             {
                 bestBaseAction=baseAction;
@@ -93,7 +94,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 EnemyAIAction testEnemyAIAction =baseAction.GetBestEnemyAIAction();
-                if(testEnemyAIAction.actionValue>bestEnemyAIAction.actionValue)
+                if(testEnemyAIAction!=null&&testEnemyAIAction.actionValue>bestEnemyAIAction.actionValue)
                 {
                     bestEnemyAIAction=testEnemyAIAction;
                     bestBaseAction=baseAction;
@@ -102,6 +103,7 @@ public class EnemyAI : MonoBehaviour
        }
        if(bestEnemyAIAction!=null)
        {
+          Debug.Log($"Action Selected {bestBaseAction.GetActionName()}");
           bestBaseAction.TakeAction(bestEnemyAIAction.gridPosition,onEnemyAIActionComplete);
           return true;
        }
@@ -112,7 +114,6 @@ public class EnemyAI : MonoBehaviour
     }
     public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
     {
-        Debug.Log("Enemy Turn Starts");
         timer=2f;
         SetTakingTurn();
     }

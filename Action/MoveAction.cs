@@ -29,7 +29,7 @@ public class MoveAction : BaseAction
             return;
         }
         targetPosition=pathList[currentIndex].GetGridPosition();
-        Debug.Log($"Current Node movement:{targetPosition}");
+        //Debug.Log($"Current Node movement:{targetPosition}");
         float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
         Vector2 moveDirection=(targetPosition-currentGridPosition).normalized;
         if(distanceToTarget>stoppingDistance)
@@ -103,10 +103,13 @@ public class MoveAction : BaseAction
     }
     public override EnemyAIAction GetEnemyAIAction(Vector2 gridPosition)
     {
-        //Checks i
+        //Checks if there is an enemy in this position to be attacked
+        AttackAction attackAction=unit.GetAction("Attack") as AttackAction;
+        int enemyCount=attackAction.GetTargetCountAtPosition(gridPosition);
+        //Debug.Log($"Enemy count:{enemyCount}");
         return new EnemyAIAction
         {
-            actionValue=5,
+            actionValue=enemyCount*10,
             gridPosition=gridPosition
         };
     }

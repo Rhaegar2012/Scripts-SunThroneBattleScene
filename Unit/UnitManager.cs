@@ -47,6 +47,7 @@ public class UnitManager : MonoBehaviour
         battleSO.GetBattleStartingPositions(out playerUnitPositions, out enemyUnitPositions);
         //Event Subscription
         TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
+        UnitHealthSystem.OnAnyUnitDestroyed+=HealthSystem_OnAnyUnitDestroyed;
         //Place Player Units
         if(playerUnitTypeList.Count>0 && playerUnitPositions.Count>0 &&playerUnitTypeList.Count==playerUnitPositions.Count)
             {
@@ -149,6 +150,21 @@ public class UnitManager : MonoBehaviour
     public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
     {
         SetCurrentUnitList();
+    }
+    public void HealthSystem_OnAnyUnitDestroyed(object sender, Unit unit)
+    {
+        if(enemyUnitList.Contains(unit))
+        {
+            enemyUnitList.Remove(unit);
+        }
+        if(friendlyUnitList.Contains(unit))
+        {
+            friendlyUnitList.Remove(unit);
+        }
+        if(currentUnitList.Contains(unit))
+        {
+            currentUnitList.Remove(unit);
+        }
     }
 
 
