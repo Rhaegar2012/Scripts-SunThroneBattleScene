@@ -30,8 +30,11 @@ public class AttackAction : BaseAction
         }
         if(unit.GetUnitPosition()==attackNode)
         {
-            targetUnit.Damage();
+            Debug.Log($"Unit {unit.GetUnitType()} attacks {targetUnit.GetUnitType()}");
             unit.SetCompletedAction(true);
+            int damageAmount=CalculateDamage();
+            Debug.Log($"Damage inflicted {damageAmount}");
+            targetUnit.Damage(damageAmount);
             ActionComplete();
         }
      
@@ -56,6 +59,11 @@ public class AttackAction : BaseAction
                 Vector2 offsetPosition= new Vector2(x,y);
                 Vector2 testPosition= unitGridPosition+offsetPosition;
                 if(!LevelGrid.Instance.IsValidGridPosition(testPosition))
+                {
+                    continue;
+                }
+                int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
+                if(testDistance>unit.GetMovementRange())
                 {
                     continue;
                 }
@@ -106,6 +114,8 @@ public class AttackAction : BaseAction
                 continue;
             }
             targetUnit=testUnit;
+            //Debug.Log($"Target unit location {targetUnit.GetUnitPosition()}");
+            //Debug.Log($"Attack Node Position {gridPosition}");
             return true;
         }
         return false;
@@ -113,11 +123,19 @@ public class AttackAction : BaseAction
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
-        Debug.Log("Attack accessed");
         attackNode=gridPosition;
-        moveAction.TakeAction(gridPosition,onActionComplete);
-        ActionStart(onActionComplete);
-      
+        Debug.Log($"Selected attack node {attackNode}");
+        moveAction.TakeAction(attackNode,onActionComplete);
+        ActionStart(onActionComplete); 
      
+    }
+    private int CalculateDamage()
+    {
+        int baseAttack=unit.GetAttackRating();
+        float baseDefense=targetUnit.GetDefenseRating();
+        Debug.Log($"Base Defense rating {baseDefense}");
+        int damageAmount=(int)(Mathf.Ceil(baseAttack/baseDefense));
+        return damageAmount;
+
     }
 }

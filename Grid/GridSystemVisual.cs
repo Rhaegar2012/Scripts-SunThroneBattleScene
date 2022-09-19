@@ -107,6 +107,11 @@ public class GridSystemVisual : MonoBehaviour
                     GridNode testNode= LevelGrid.Instance.GetNodeAtPosition(testGridPosition);
                     NodeType testNodeType= testNode.GetNodeType();
                     List<NodeType> walkableNodeTypes= selectedUnit.GetWalkableNodeTypeList();
+                    int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
+                    if(testDistance>movementRange)
+                    {
+                        continue;
+                    }
                     if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
                     {
                         Unit unitAtNode=LevelGrid.Instance.GetUnitAtGridNode(testGridPosition);
@@ -120,11 +125,6 @@ public class GridSystemVisual : MonoBehaviour
                             continue;
                         }
 
-                    }
-                    int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
-                    if(testDistance>movementRange)
-                    {
-                        continue;
                     }
                     if(!walkableNodeTypes.Contains(testNodeType))
                     {
@@ -165,7 +165,6 @@ public class GridSystemVisual : MonoBehaviour
             continue;
         }
         GridNode attackNode= LevelGrid.Instance.GetNodeAtPosition(attackNodePosition);
-        attackNode.SetAttackNode(true);
         Transform enemyGridVisual=Instantiate(attackNodePrefab,attackNodePosition,Quaternion.identity);
         enemyGridVisualsList.Add(enemyGridVisual);
       }

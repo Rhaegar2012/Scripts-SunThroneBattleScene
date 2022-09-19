@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
 {
     //Events
     //Fields
-    private int defenseRating;
+    private float defenseRating;
     private int attackRating;
     private UnitType unitType;
     private bool isEnemy;
@@ -123,9 +123,9 @@ public class Unit : MonoBehaviour
                
         }
     }
-    public void Damage()
+    public void Damage(int damageAmount)
     {
-        healthSystem.Damage();
+        healthSystem.Damage(damageAmount);
     }
     public List<NodeType> GetWalkableNodeTypeList()
     {
@@ -142,6 +142,41 @@ public class Unit : MonoBehaviour
     public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
     {
         actionCompleted=false;
+    }
+    public float GetDefenseRating()
+    {
+        float totalDefenseRating=defenseRating;
+        float defenseModifier=0f;
+        NodeType nodeType= gridNode.GetNodeType();
+        switch(nodeType)
+        {
+            case NodeType.Grassland:
+                defenseModifier=0.15f;
+                break;
+            case NodeType.Forest:
+                defenseModifier=0.3f;
+                break;
+            case NodeType.Mountain:
+                defenseModifier=0.5f;
+                break;
+            case NodeType.River:
+                defenseModifier=0f;
+                break;
+            case NodeType.Road:
+                defenseModifier=0f;
+                break;
+        }
+        if(totalDefenseRating==defenseRating)
+        {
+            totalDefenseRating=defenseRating*(1+defenseModifier);
+        }
+  
+        return totalDefenseRating;
+        
+    }
+    public int GetAttackRating()
+    {
+        return attackRating;
     }
  
     

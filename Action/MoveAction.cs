@@ -95,6 +95,14 @@ public class MoveAction : BaseAction
     {
         currentIndex=0;
         targetPosition=gridPosition;
+        List<Vector2> validGridPositions= GetValidGridPositionList();
+        //If an attack position is outside of movement range allows enemy to move to the edge of 
+        //the movement range to get closer for attack
+        //(Enemy AI)
+        if(!validGridPositions.Contains(targetPosition))
+        {
+            targetPosition=validGridPositions.Find(position=>Vector2.Distance(position,gridPosition)>=unit.GetMovementRange());
+        }
         GridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
         pathList= Pathfinding.Instance.FindPath(unit,GetValidGridPositionList(),targetNode);
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
@@ -106,7 +114,6 @@ public class MoveAction : BaseAction
         //Checks if there is an enemy in this position to be attacked
         AttackAction attackAction=unit.GetAction("Attack") as AttackAction;
         int enemyCount=attackAction.GetTargetCountAtPosition(gridPosition);
-        //Debug.Log($"Enemy count:{enemyCount}");
         return new EnemyAIAction
         {
             actionValue=enemyCount*10,
