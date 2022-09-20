@@ -103,6 +103,7 @@ public class MoveAction : BaseAction
         {
             targetPosition=validGridPositions.Find(position=>Vector2.Distance(position,gridPosition)>=unit.GetMovementRange());
         }
+        Debug.Log($"Valid movement position {targetPosition}");
         GridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
         pathList= Pathfinding.Instance.FindPath(unit,GetValidGridPositionList(),targetNode);
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);

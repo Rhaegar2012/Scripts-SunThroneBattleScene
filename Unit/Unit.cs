@@ -168,7 +168,7 @@ public class Unit : MonoBehaviour
         }
         if(totalDefenseRating==defenseRating)
         {
-            totalDefenseRating=defenseRating*(1+defenseModifier);
+            totalDefenseRating=defenseRating+defenseModifier;
         }
   
         return totalDefenseRating;
@@ -177,6 +177,10 @@ public class Unit : MonoBehaviour
     public int GetAttackRating()
     {
         return attackRating;
+    }
+    public int GetHealth()
+    {
+        return healthSystem.GetHealth();
     }
  
     

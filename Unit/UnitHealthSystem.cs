@@ -25,11 +25,16 @@ public class UnitHealthSystem : MonoBehaviour
         }
        
     }
+    public int GetHealth()
+    {
+        return healthPoints;
+    }
     private void Die()
     {
         Destroy(gameObject);
         OnAnyUnitDestroyed?.Invoke(this,unit);
     }
+
 
 
 }
