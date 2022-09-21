@@ -7,17 +7,21 @@ public class UnitHealthSystem : MonoBehaviour
 {
     //Events
     public static event EventHandler<Unit> OnAnyUnitDestroyed;
+    public event EventHandler OnDamaged;
     //Fields
     private int healthPoints;
+    private int totalHealth;
     private Unit unit;
     void Awake()
     {
         unit= GetComponent<Unit>();
         healthPoints=10;
+        totalHealth=healthPoints;
     }
     public void Damage(int damageAmount)
     {
         healthPoints-=damageAmount;
+        OnDamaged?.Invoke(this,EventArgs.Empty);
         Debug.Log($"Remaining health: {healthPoints}");
         if(healthPoints<=0)
         {
@@ -33,6 +37,10 @@ public class UnitHealthSystem : MonoBehaviour
     {
         Destroy(gameObject);
         OnAnyUnitDestroyed?.Invoke(this,unit);
+    }
+    public float GetHealthNormalized()
+    {
+        return (float)healthPoints/totalHealth;
     }
 
 
