@@ -10,8 +10,8 @@ public class MenuManager : MonoBehaviour
     //Singleton
     public static MenuManager Instance{get;private set;}
     //Fields
-    [SerializeField] private BattleWonScreen battleWonScreenPrefab;
-    [SerializeField] private BattleLostScreen battleLostScreenPrefab;
+    [SerializeField] private LevelCompleteScreen levelCompleteScreenPrefab;
+    [SerializeField] private GameOverScreen gameOverScreenPrefab;
     private Transform menuParent;
     private Stack<Menu> menuStack;
     // Start is called before the first frame update
@@ -24,11 +24,12 @@ public class MenuManager : MonoBehaviour
             return;
         }
         Instance=this;
+        menuStack=new Stack<Menu>();
 
     }
     void Start()
     {
-        
+        InitializeMenus();
     }
     private void InitializeMenus()
     {
@@ -49,7 +50,7 @@ public class MenuManager : MonoBehaviour
                 Menu menuInstance=Instantiate(menuPrefab,menuParent);
                 menuInstance.gameObject.SetActive(false);
             }
-            //TODO: Open main menu prefab here
+            //TODO: Open Main Menu prefab here
             
         }
 
@@ -57,6 +58,7 @@ public class MenuManager : MonoBehaviour
     }
     public void OpenMenu(Menu menuInstance)
     {
+        Debug.Log("MENU MANAGER OpenMenu Called");
         if(menuInstance==null)
         {
             Debug.LogWarning("MENUMANAGER: OpenMenu Invalid menuInstance");

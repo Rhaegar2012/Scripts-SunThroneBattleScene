@@ -7,6 +7,8 @@ public class UnitManager : MonoBehaviour
 {
     //Singleton
     public static UnitManager Instance {get; private set;}
+    //Events
+    public event EventHandler<string> OnArmyDestroyed;
     //Fields
     [SerializeField] Transform unitPrefab;
     [SerializeField] BattleSceneSO battleSO;
@@ -60,15 +62,15 @@ public class UnitManager : MonoBehaviour
                     switch(unitType)
                     {
                         case UnitType.Infantry:
-                        unitScript.SetUnitParameters(1,1,5,unitType,false,unitGridNode,playerInfantrySprite);
+                        unitScript.SetUnitParameters(100,100,5,unitType,false,unitGridNode,playerInfantrySprite);
                         unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.LightArmor:
-                        unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerLightArmorSprite);
+                        unitScript.SetUnitParameters(100,100,7,unitType,false,unitGridNode,playerLightArmorSprite);
                         unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.MBT:
-                        unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerMBTSprite);
+                        unitScript.SetUnitParameters(100,100,7,unitType,false,unitGridNode,playerMBTSprite);
                         unitScript.SetWalkableNodeTypes();
                         break;
                     }
@@ -120,6 +122,10 @@ public class UnitManager : MonoBehaviour
             }
             
         }
+        if(currentUnitList.Count==0)
+        {
+            OnArmyDestroyed?.Invoke(this,"Enemy");
+        }
         SwitchTurn();
     }
 
@@ -138,6 +144,19 @@ public class UnitManager : MonoBehaviour
     {
         
         TurnSystem.Instance.NextTurn();
+    }
+    private void CheckIfArmyDestroyed()
+    {
+        
+        if(enemyUnitList.Count==0 && friendlyUnitList.Count>0)
+        {
+            OnArmyDestroyed?.Invoke(this,"Enemy");
+        }
+        if(enemyUnitList.Count>0 && friendlyUnitList.Count==0)
+        {
+            OnArmyDestroyed?.Invoke(this,"Player");
+        }
+
     }
     public List<Unit> GetEnemyUnitList()
     {
