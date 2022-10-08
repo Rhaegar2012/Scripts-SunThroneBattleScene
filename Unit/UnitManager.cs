@@ -24,6 +24,7 @@ public class UnitManager : MonoBehaviour
     private List<Unit> currentUnitList;
     private List<Unit> friendlyUnitList;
     private List<Unit> enemyUnitList;
+    private bool isArmyDestroyed=false;
     private void Awake()
     {
         if(Instance!=null)
@@ -114,6 +115,7 @@ public class UnitManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         foreach(Unit unit in currentUnitList)
         {
             if(!unit.UnitCompletedAction())
@@ -121,10 +123,6 @@ public class UnitManager : MonoBehaviour
                 return;
             }
             
-        }
-        if(currentUnitList.Count==0)
-        {
-            OnArmyDestroyed?.Invoke(this,"Enemy");
         }
         SwitchTurn();
     }
@@ -144,19 +142,6 @@ public class UnitManager : MonoBehaviour
     {
         
         TurnSystem.Instance.NextTurn();
-    }
-    private void CheckIfArmyDestroyed()
-    {
-        
-        if(enemyUnitList.Count==0 && friendlyUnitList.Count>0)
-        {
-            OnArmyDestroyed?.Invoke(this,"Enemy");
-        }
-        if(enemyUnitList.Count>0 && friendlyUnitList.Count==0)
-        {
-            OnArmyDestroyed?.Invoke(this,"Player");
-        }
-
     }
     public List<Unit> GetEnemyUnitList()
     {
@@ -183,6 +168,14 @@ public class UnitManager : MonoBehaviour
         if(currentUnitList.Contains(unit))
         {
             currentUnitList.Remove(unit);
+        }
+        if (enemyUnitList.Count==0)
+        {
+            OnArmyDestroyed?.Invoke(this,"Enemy");
+        }
+        if(friendlyUnitList.Count==0)
+        {
+            OnArmyDestroyed?.Invoke(this,"Player");
         }
     }
     

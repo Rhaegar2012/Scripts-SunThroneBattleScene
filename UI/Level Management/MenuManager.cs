@@ -12,8 +12,10 @@ public class MenuManager : MonoBehaviour
     //Fields
     [SerializeField] private LevelCompleteScreen levelCompleteScreenPrefab;
     [SerializeField] private GameOverScreen gameOverScreenPrefab;
+    [SerializeField] private MainMenu mainMenuPrefab;
     private Transform menuParent;
     private Stack<Menu> menuStack;
+    private int mainMenuIndex=0;
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,11 +27,14 @@ public class MenuManager : MonoBehaviour
         }
         Instance=this;
         menuStack=new Stack<Menu>();
+       
+
 
     }
     void Start()
     {
         InitializeMenus();
+        MainMenu.Open();
     }
     private void InitializeMenus()
     {

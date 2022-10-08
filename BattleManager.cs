@@ -6,7 +6,6 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
 
-    private bool levelComplete=false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,14 +18,22 @@ public class BattleManager : MonoBehaviour
    
     }
 
-    public void UnitManager_OnArmyDestroyed(object sender, String army)
+    public void UnitManager_OnArmyDestroyed(object sender, string army)
     {
         Debug.Log("End Level event called");
         EndLevel(army);
     }
-    private void EndLevel(string armyDestroyed)
+    private void EndLevel(string army)
     {
-        LevelCompleteScreen.Open();
+        if(army=="Enemy")
+        {
+            LevelCompleteScreen.Open();
+        }
+        if(army=="Player")
+        {
+            GameOverScreen.Open();
+        }
+
     }
 
 }

@@ -5,4 +5,5 @@ using UnityEngine;
 public class LevelCompleteScreen : Menu<LevelCompleteScreen>
 {
     
+    
 }
