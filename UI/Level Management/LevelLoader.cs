@@ -10,4 +10,11 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.LoadScene(levelIndex);
     }
+
+    public static void ReloadLevel()
+    {
+        Scene currentScene=SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
+
+    }
 }

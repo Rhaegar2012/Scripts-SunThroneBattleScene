@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class GameOverScreen : Menu<GameOverScreen>
 {
-   
+   public void OnRetryPressed()
+   {
+        LevelLoader.ReloadLevel();
+   }
 }

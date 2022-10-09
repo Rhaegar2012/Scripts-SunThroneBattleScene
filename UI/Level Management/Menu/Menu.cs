@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public abstract class Menu<T>:Menu where T:Menu<T>
 {
@@ -19,8 +20,6 @@ public abstract class Menu<T>:Menu where T:Menu<T>
     public static void Open()
     {
         Debug.Log("MENU: Open called");
-        Debug.Log($"MenuManager {MenuManager.Instance}");
-        Debug.Log($"Menu Instance {Instance}");
         if(MenuManager.Instance!=null && Instance!=null)
         {
             Debug.Log("MENU:Open accessed");
@@ -32,6 +31,19 @@ public abstract class Menu<T>:Menu where T:Menu<T>
 }
 public abstract class Menu:MonoBehaviour
 {
-
+    private int mainLevelIndex=0;
+    public void OnQuitPressed()
+    {
+        Application.Quit();
+    }
+    public void OnMainMenuPressed()
+    {
+        LevelLoader.LoadLevel(mainLevelIndex);
+        MainMenu.Open();
+    }
+    public void OnLevelSelectionPressed()
+    {
+        LevelSelectionMenu.Open();
+    }
 }
 

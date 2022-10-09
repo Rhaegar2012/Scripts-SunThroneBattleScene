@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private LevelCompleteScreen levelCompleteScreenPrefab;
     [SerializeField] private GameOverScreen gameOverScreenPrefab;
     [SerializeField] private MainMenu mainMenuPrefab;
+    [SerializeField] private LevelSelectionMenu levelSelectionPrefab;
     private Transform menuParent;
     private Stack<Menu> menuStack;
     private int mainMenuIndex=0;
@@ -34,7 +35,6 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         InitializeMenus();
-        MainMenu.Open();
     }
     private void InitializeMenus()
     {
@@ -55,9 +55,10 @@ public class MenuManager : MonoBehaviour
                 Menu menuInstance=Instantiate(menuPrefab,menuParent);
                 menuInstance.gameObject.SetActive(false);
             }
-            //TODO: Open Main Menu prefab here
+            
             
         }
+        MainMenu.Open();
 
 
     }
@@ -75,6 +76,8 @@ public class MenuManager : MonoBehaviour
             {
                 menu.gameObject.SetActive(false);
             }
+            menuInstance.gameObject.SetActive(true);
+            menuStack.Push(menuInstance);
 
         }
         else

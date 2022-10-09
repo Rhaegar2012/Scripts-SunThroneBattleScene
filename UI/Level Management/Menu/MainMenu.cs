@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class MainMenu : Menu<MainMenu>
 {
-    private int firstLevelIndex=1;
-    public void OnPlayPressed()
+    
+    public void OnLevelSelectionPressed()
     {
-        LevelLoader.LoadLevel(firstLevelIndex);
+        LevelSelectionMenu.Open();
     }
 
     public void OnSettingsPressed()
     {
         //TODO
     }
-    public void OnQuitPressed()
-    {
-        //TODO
-    }
+ 
 }
