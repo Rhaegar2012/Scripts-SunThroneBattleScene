@@ -10,6 +10,10 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.LoadScene(levelIndex);
     }
+    public static void LoadLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
+    }
 
     public static void ReloadLevel()
     {

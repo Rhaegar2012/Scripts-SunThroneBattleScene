@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour
     public void UnitManager_OnArmyDestroyed(object sender, string army)
     {
         Debug.Log("End Level event called");
+        Debug.Log($"Losing army {army}");
         EndLevel(army);
     }
     private void EndLevel(string army)

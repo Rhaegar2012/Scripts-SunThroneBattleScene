@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public abstract class Menu<T>:Menu where T:Menu<T>
 {
     public static T Instance{get;private set;}
-    private void Awake()
+    protected virtual void Awake()
     {
         if(Instance!=null)
         {
@@ -19,10 +19,9 @@ public abstract class Menu<T>:Menu where T:Menu<T>
     }
     public static void Open()
     {
-        Debug.Log("MENU: Open called");
+
         if(MenuManager.Instance!=null && Instance!=null)
         {
-            Debug.Log("MENU:Open accessed");
             MenuManager.Instance.OpenMenu(Instance);
         }
     }

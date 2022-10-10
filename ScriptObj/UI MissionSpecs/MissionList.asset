@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0fc266897a22e47beb78c0b47eb1ef, type: 3}
+  m_Name: MissionList
+  m_EditorClassIdentifier: 
+  missionList:
+  - missionID: 1
+    missionTitle: TestLevel
+    missionThumbnail: {fileID: 21300000, guid: 30a90046207889a46b8e641489c91668, type: 3}
+    missionDescription: "Test/Tutorial  Level utilized for\ncreating mechanics and
+      balancing game stats\n "

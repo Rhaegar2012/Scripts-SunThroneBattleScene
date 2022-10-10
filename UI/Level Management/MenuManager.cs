@@ -27,6 +27,7 @@ public class MenuManager : MonoBehaviour
             return;
         }
         Instance=this;
+        UnityEngine.Object.DontDestroyOnLoad(gameObject);
         menuStack=new Stack<Menu>();
        
 
@@ -43,6 +44,8 @@ public class MenuManager : MonoBehaviour
             GameObject menuParentObject=new GameObject("Menus");
             menuParent=menuParentObject.transform;
         }
+        //Menu dontdestroy on load 
+        UnityEngine.Object.DontDestroyOnLoad(menuParent.gameObject);
         //Reflection obtains all the menu serialized fields and collects them into
         Type myType=this.GetType();
         BindingFlags myFlags=BindingFlags.Instance| BindingFlags.NonPublic| BindingFlags.DeclaredOnly;
@@ -64,7 +67,7 @@ public class MenuManager : MonoBehaviour
     }
     public void OpenMenu(Menu menuInstance)
     {
-        Debug.Log("MENU MANAGER OpenMenu Called");
+
         if(menuInstance==null)
         {
             Debug.LogWarning("MENUMANAGER: OpenMenu Invalid menuInstance");
@@ -97,6 +100,14 @@ public class MenuManager : MonoBehaviour
             nextMenu.gameObject.SetActive(true);
         }
 
+    }
+
+    public void CloseAllMenus()
+    {
+        foreach(Menu menu in menuStack)
+        {
+            menu.gameObject.SetActive(false);
+        }
     }
     
 }
