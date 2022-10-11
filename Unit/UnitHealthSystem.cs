@@ -22,7 +22,6 @@ public class UnitHealthSystem : MonoBehaviour
     {
         healthPoints-=damageAmount;
         OnDamaged?.Invoke(this,EventArgs.Empty);
-        Debug.Log($"Remaining health: {healthPoints}");
         if(healthPoints<=0)
         {
             Die();
