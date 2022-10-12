@@ -63,15 +63,15 @@ public class UnitManager : MonoBehaviour
                     switch(unitType)
                     {
                         case UnitType.Infantry:
-                        unitScript.SetUnitParameters(100,100,5,unitType,false,unitGridNode,playerInfantrySprite);
+                        unitScript.SetUnitParameters(1,1,5,unitType,false,unitGridNode,playerInfantrySprite);
                         unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.LightArmor:
-                        unitScript.SetUnitParameters(100,100,7,unitType,false,unitGridNode,playerLightArmorSprite);
+                        unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerLightArmorSprite);
                         unitScript.SetWalkableNodeTypes();
                         break;
                         case UnitType.MBT:
-                        unitScript.SetUnitParameters(100,100,7,unitType,false,unitGridNode,playerMBTSprite);
+                        unitScript.SetUnitParameters(5,5,7,unitType,false,unitGridNode,playerMBTSprite);
                         unitScript.SetWalkableNodeTypes();
                         break;
                     }

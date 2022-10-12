@@ -1,14 +1,24 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelCompleteScreen : Menu<LevelCompleteScreen>
 {
-    [SerializeField] private static Image tacticsSliderImage;
-    [SerializeField] private static Image dominanceSliderImage;
-    [SerializeField] private static Image agilitySliderImage;
-    public static void UpdateScoreSlider(float tacticsScore, float agilityScore, float dominanceScore)
+    [SerializeField] private Image tacticsSliderImage;
+    [SerializeField] private Image dominanceSliderImage;
+    [SerializeField] private Image agilitySliderImage;
+    [SerializeField] private Image medalImage;
+    [SerializeField] private Sprite bronzeMedalSprite;
+    [SerializeField] private Sprite silverMedalSprite;
+    [SerializeField] private Sprite goldMedalSprite;
+    private void Start()
+    {
+        BattleManager.OnLevelFinished+=BattleManager_OnLevelFinished;
+
+    }
+    public  void UpdateScoreSlider(float tacticsScore, float agilityScore, float dominanceScore)
     {
         tacticsSliderImage.fillAmount=tacticsScore;
         agilitySliderImage.fillAmount=agilityScore;
@@ -16,9 +26,28 @@ public class LevelCompleteScreen : Menu<LevelCompleteScreen>
 
     }
 
-    public static void DisplayPlayerRank(float tacticsScore, float agilityScore, float dominanceScore)
+    public  void DisplayRankBadge(float tacticsScore, float agilityScore, float dominanceScore)
     {
-        //TODO
+        float[] scores={tacticsScore,agilityScore,dominanceScore};
+        float averageScore= scores.AsQueryable().Average();
+        if(averageScore>0.85)
+        {
+            medalImage.sprite=goldMedalSprite;
+        }
+        else if(averageScore>=0.5 && averageScore<=0.85)
+        {
+            medalImage.sprite=silverMedalSprite;
+        }
+        else if(averageScore<=0.5)
+        {
+            medalImage.sprite=bronzeMedalSprite;
+        }
+    }
+    public void BattleManager_OnLevelFinished(object sender,PlayerScore scores)
+    {
+        UpdateScoreSlider(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
+        DisplayRankBadge(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
+
     }
 
     

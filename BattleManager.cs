@@ -21,6 +21,8 @@ public class BattleManager : MonoBehaviour
     [Header("Dominance Metrics")]
     [SerializeField] private int minEnemyDestructionRatioForBattle;
     // Start is called before the first frame update
+    //Events
+    public static event EventHandler<PlayerScore> OnLevelFinished;
     void Start()
     {
         UnitManager.Instance.OnArmyDestroyed+=UnitManager_OnArmyDestroyed;
@@ -56,7 +58,8 @@ public class BattleManager : MonoBehaviour
     {
         if(army=="Enemy")
         {
-            LevelCompleteScreen.UpdateScoreSlider(tacticsSliderScore,agilitySliderScore,dominanceSliderScore);
+            PlayerScore playerScore= new PlayerScore(tacticsSliderScore,dominanceSliderScore,agilitySliderScore);
+            OnLevelFinished?.Invoke(this, playerScore);
             LevelCompleteScreen.Open();
         }
         if(army=="Player")
