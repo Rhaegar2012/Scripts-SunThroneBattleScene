@@ -135,8 +135,6 @@ public class AttackAction : BaseAction
                 continue;
             }
             targetUnit=testUnit;
-            //Debug.Log($"Target unit location {targetUnit.GetUnitPosition()}");
-            //Debug.Log($"Attack Node Position {gridPosition}");
             return true;
         }
         return false;
@@ -148,7 +146,7 @@ public class AttackAction : BaseAction
         attackNode=gridPosition;
         if(EnemyUnitInAttackRange(attackNode))
         {
-            Debug.Log($"Selected attack node {attackNode}");
+
             moveAction.TakeAction(attackNode,onActionComplete);
             ActionStart(onActionComplete);
 
@@ -157,10 +155,9 @@ public class AttackAction : BaseAction
     }
     private int CalculateDamage()
     {
-        int baseAttack=unit.GetAttackRating();
+        float baseAttack=unit.GetAttackRating();
         float baseDefense=targetUnit.GetDefenseRating();
-        Debug.Log($"Base Defense rating {baseDefense}");
-        int damageAmount=(int)(Mathf.Ceil(baseAttack/baseDefense));
+        int damageAmount=(int)(Mathf.Ceil(baseAttack-baseDefense));
         return damageAmount;
 
     }

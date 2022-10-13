@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7df60625b588634bb878c4b1a154e28, type: 3}
   m_Name: TestBattle
   m_EditorClassIdentifier: 
-  playerArmyUnits: 000000000000000001000000
+  playerArmyUnits: 00000000000000000100000001000000
   playerArmyPositions:
   - {x: 0, y: 0}
   - {x: 0, y: 1}
   - {x: 1, y: 1}
+  - {x: 1, y: 2}
   enemyArmyUnits: 00000000000000000100000000000000
   enemyArmyPositions:
   - {x: 8, y: 9}

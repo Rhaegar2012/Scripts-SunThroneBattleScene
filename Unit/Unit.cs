@@ -147,6 +147,7 @@ public class Unit : MonoBehaviour
     {
         float totalDefenseRating=defenseRating;
         float defenseModifier=0f;
+        float unitHealth=healthSystem.GetHealthNormalized();
         NodeType nodeType= gridNode.GetNodeType();
         switch(nodeType)
         {
@@ -168,15 +169,17 @@ public class Unit : MonoBehaviour
         }
         if(totalDefenseRating==defenseRating)
         {
-            totalDefenseRating=defenseRating+defenseModifier;
+            totalDefenseRating=(defenseRating+defenseModifier)*unitHealth;
         }
   
         return totalDefenseRating;
         
     }
-    public int GetAttackRating()
+    public float GetAttackRating()
     {
-        return attackRating;
+        float unitHealth = healthSystem.GetHealthNormalized();
+
+        return attackRating*unitHealth;
     }
     public int GetHealth()
     {

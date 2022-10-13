@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
@@ -13,8 +14,9 @@ public class LevelCompleteScreen : Menu<LevelCompleteScreen>
     [SerializeField] private Sprite bronzeMedalSprite;
     [SerializeField] private Sprite silverMedalSprite;
     [SerializeField] private Sprite goldMedalSprite;
-    private void Start()
+    public void Subscribe ()
     {
+        Debug.Log("Accessed subscription method");
         BattleManager.OnLevelFinished+=BattleManager_OnLevelFinished;
 
     }
@@ -43,10 +45,12 @@ public class LevelCompleteScreen : Menu<LevelCompleteScreen>
             medalImage.sprite=bronzeMedalSprite;
         }
     }
-    public void BattleManager_OnLevelFinished(object sender,PlayerScore scores)
+    public void BattleManager_OnLevelFinished(object sender,EventArgs empty)
     {
-        UpdateScoreSlider(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
-        DisplayRankBadge(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
+        Debug.Log("Calculate score event called");
+        //UpdateScoreSlider(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
+        //DisplayRankBadge(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
+        Open();
 
     }
 
