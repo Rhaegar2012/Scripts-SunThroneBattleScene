@@ -44,5 +44,10 @@ public abstract class Menu:MonoBehaviour
     {
         LevelSelectionMenu.Open();
     }
+    public  virtual void SubscribeToEvents()
+    {
+        //Placeholder method for event subscription
+
+    }
 }
 

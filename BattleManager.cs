@@ -22,7 +22,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private int minEnemyDestructionRatioForBattle;
     // Start is called before the first frame update
     //Events
-    public static event EventHandler OnLevelFinished;
+    public static event EventHandler<PlayerScore> OnLevelFinished;
  
     void Start()
     {
@@ -60,8 +60,11 @@ public class BattleManager : MonoBehaviour
     {
         if(army=="Enemy")
         {
+            CalculateTacticsScore();
+            CalculateAgilityScore();
+            CalculateDominanceScore();
             PlayerScore playerScore= new PlayerScore(tacticsSliderScore,dominanceSliderScore,agilitySliderScore);
-            OnLevelFinished?.Invoke(this, EventArgs.Empty);
+            OnLevelFinished?.Invoke(this, playerScore);
         }
         if(army=="Player")
         {

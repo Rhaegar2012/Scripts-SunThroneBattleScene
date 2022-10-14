@@ -57,6 +57,7 @@ public class MenuManager : MonoBehaviour
             {
                 Menu menuInstance=Instantiate(menuPrefab,menuParent);
                 menuInstance.gameObject.SetActive(false);
+                menuInstance.SubscribeToEvents();
             }
             
             
