@@ -10,6 +10,7 @@ public class AttackAction : BaseAction
     private BaseAction moveAction;
     private int attackRange;
     private Vector2 attackNode;
+    List<Unit> enemiesInRange=new List<Unit>();
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -80,6 +81,7 @@ public class AttackAction : BaseAction
                 {
                     continue;
                 }
+                enemiesInRange.Add(testUnit);
                 foreach(Vector2 direction in attackDirections)
                 {
                     Vector2 attackPosition=testPosition+direction;
@@ -109,7 +111,9 @@ public class AttackAction : BaseAction
     }
     public int GetTargetCountAtPosition(Vector2 gridPosition)
     {
-        return GetValidGridPositionList(gridPosition).Count;
+        enemiesInRange.Clear();
+        GetValidGridPositionList();
+        return enemiesInRange.Count;
     }
     
     public bool EnemyUnitInAttackRange(Vector2 gridPosition)

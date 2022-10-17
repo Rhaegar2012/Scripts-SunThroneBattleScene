@@ -80,19 +80,25 @@ public class GridSystemVisual : MonoBehaviour
                 renderer.enabled=false;
             }
         }
-
-
    }
-
-  
    private void UpdateGridVisual()
    {
         HideGridPositions();
         Unit selectedUnit= UnitActionSystem.Instance.GetSelectedUnit();
         if(selectedUnit!=null)
         {
+            //Displays valid movement positions
+             List<Vector2> validMovementPositions=selectedUnit.GetValidMovementPositionList();
+             foreach(Vector2 position in validMovementPositions)
+             {
+                Transform visualSingle=gridSystemVisualArray[(int)position.x,(int)position.y];
+                SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
+                renderer.enabled=true;
+
+              }
               int  movementRange=selectedUnit.GetMovementRange();
               Vector2 unitPosition= selectedUnit.GetUnitPosition();
+              //Displays attack positions
               for(int x=-movementRange;x<=movementRange;x++)
               {
                 for(int y=-movementRange;y<=movementRange;y++)
@@ -104,9 +110,6 @@ public class GridSystemVisual : MonoBehaviour
                     {
                         continue;
                     }
-                    GridNode testNode= LevelGrid.Instance.GetNodeAtPosition(testGridPosition);
-                    NodeType testNodeType= testNode.GetNodeType();
-                    List<NodeType> walkableNodeTypes= selectedUnit.GetWalkableNodeTypeList();
                     int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
                     if(testDistance>movementRange)
                     {
@@ -126,13 +129,7 @@ public class GridSystemVisual : MonoBehaviour
                         }
 
                     }
-                    if(!walkableNodeTypes.Contains(testNodeType))
-                    {
-                         continue;
-                    }
-                    Transform visualSingle=gridSystemVisualArray[(int)testGridPosition.x,(int)testGridPosition.y];
-                    SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
-                    renderer.enabled=true;
+                  
                 }
              }
 

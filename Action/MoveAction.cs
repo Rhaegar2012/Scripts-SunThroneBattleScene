@@ -59,8 +59,8 @@ public class MoveAction : BaseAction
     {
         int movementRange=unit.GetMovementRange();
         Vector2 unitGridPosition=unit.GetUnitPosition();
-        List<Vector2> validGridPositionList= new List<Vector2>();
-        for(int x=-movementRange;x<=movementRange;x++)
+        List<Vector2> validGridPositionList= unit.GetValidMovementPositionList();
+        /*for(int x=-movementRange;x<=movementRange;x++)
         {
             for(int y=-movementRange;y<=movementRange;y++)
             {
@@ -88,7 +88,7 @@ public class MoveAction : BaseAction
                 validGridPositionList.Add(testGridPosition);
                 
             }
-        }
+        }*/
         return validGridPositionList;
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
@@ -115,6 +115,15 @@ public class MoveAction : BaseAction
         //Checks if there is an enemy in this position to be attacked
         AttackAction attackAction=unit.GetAction("Attack") as AttackAction;
         int enemyCount=attackAction.GetTargetCountAtPosition(gridPosition);
+        Debug.Log($"Enemy count {enemyCount}");
+        if(enemyCount==0)
+        {
+            return new EnemyAIAction
+            {
+                actionValue=10,
+                gridPosition=gridPosition
+            };
+        }
         return new EnemyAIAction
         {
             actionValue=enemyCount*10,

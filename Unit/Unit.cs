@@ -90,6 +90,69 @@ public class Unit : MonoBehaviour
     {
         return movementRange;
     }
+    public List<Vector2> GetValidMovementPositionList()
+    {
+        Vector2 unitPosition=GetUnitPosition();
+        int unitBaseMovement=movementRange;
+        List<Vector2> validMovementPositions= new List<Vector2>();
+        List<Vector2> directions=new List<Vector2>{new Vector2(1,0),new Vector2(-1,0),
+                                  new Vector2(0,1),new Vector2(0,-1),
+                                  new Vector2(1,1),new Vector2(-1,1),
+                                  new Vector2(1,-1),new Vector2(-1,-1)};
+        foreach(Vector2 direction in directions)
+        {
+            Vector2 testPosition=unitPosition+direction;
+            while(unitBaseMovement>0)
+            {
+                if(LevelGrid.Instance.IsValidGridPosition(testPosition))
+                {
+                    if(LevelGrid.Instance.HasAnyUnitAtGridNode(testPosition))
+                    {
+                        unitBaseMovement=0;
+                    }
+                    if(testPosition==unitPosition)
+                    {
+                        unitBaseMovement=0;
+                    }
+                    GridNode testNode=LevelGrid.Instance.GetNodeAtPosition(testPosition);
+                    NodeType nodeType=testNode.GetNodeType();
+                    if(!walkableNodeTypeList.Contains(nodeType))
+                    {
+                        unitBaseMovement=0;
+                    }
+                    validMovementPositions.Add(testPosition);
+                    switch(nodeType)
+                    {
+                        case NodeType.Grassland:
+                            unitBaseMovement=unitBaseMovement-1;
+                            break;
+                        case NodeType.Forest:
+                            unitBaseMovement=unitBaseMovement-2;
+                            break;
+                        case NodeType.Mountain:
+                            unitBaseMovement=unitBaseMovement-3;
+                            break;
+                        case NodeType.River:
+                            unitBaseMovement=unitBaseMovement-2;
+                            break;
+                        case NodeType.Road:
+                            unitBaseMovement=unitBaseMovement-0;
+                            break;
+
+                    }
+                    
+                }
+                else
+                {
+                    unitBaseMovement=0;
+                }
+                testPosition+=direction;
+            }
+            unitBaseMovement=movementRange;
+            
+        }
+        return validMovementPositions;
+    }
     public BaseAction GetAction(string actionName)
     {
         BaseAction selectedAction= Array.Find(actionList,action=>action.GetActionName()==actionName);
