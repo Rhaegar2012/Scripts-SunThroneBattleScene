@@ -91,10 +91,15 @@ public class GridSystemVisual : MonoBehaviour
              List<Vector2> validMovementPositions=selectedUnit.GetValidMovementPositionList();
              foreach(Vector2 position in validMovementPositions)
              {
+                GridNode positionNode= LevelGrid.Instance.GetNodeAtPosition(position);
+                NodeType nodeType= positionNode.GetNodeType();
                 Transform visualSingle=gridSystemVisualArray[(int)position.x,(int)position.y];
                 SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
-                renderer.enabled=true;
-
+                if(selectedUnit.GetWalkableNodeTypeList().Contains(nodeType))
+                {
+                    renderer.enabled=true;
+                }
+                
               }
               int  movementRange=selectedUnit.GetMovementRange();
               Vector2 unitPosition= selectedUnit.GetUnitPosition();

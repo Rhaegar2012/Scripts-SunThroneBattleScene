@@ -59,7 +59,19 @@ public class MoveAction : BaseAction
     {
         int movementRange=unit.GetMovementRange();
         Vector2 unitGridPosition=unit.GetUnitPosition();
-        List<Vector2> validGridPositionList= unit.GetValidMovementPositionList();
+        List<Vector2> validGridPositionList= new List<Vector2>();
+        foreach(Vector2 position in unit.GetValidMovementPositionList())
+        {
+            GridNode testNode= LevelGrid.Instance.GetNodeAtPosition(position);
+            NodeType testNodeType= testNode.GetNodeType();
+            List<NodeType> walkableNodeTypes=unit.GetWalkableNodeTypeList();
+            if(!walkableNodeTypes.Contains(testNodeType))
+            {
+                continue;
+            }
+            validGridPositionList.Add(position);
+
+        }
         /*for(int x=-movementRange;x<=movementRange;x++)
         {
             for(int y=-movementRange;y<=movementRange;y++)
@@ -89,6 +101,7 @@ public class MoveAction : BaseAction
                 
             }
         }*/
+        Debug.Log($"Valid Grid position count{validGridPositionList.Count}");
         return validGridPositionList;
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)

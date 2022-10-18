@@ -96,9 +96,9 @@ public class Unit : MonoBehaviour
         int unitBaseMovement=movementRange;
         List<Vector2> validMovementPositions= new List<Vector2>();
         List<Vector2> directions=new List<Vector2>{new Vector2(1,0),new Vector2(-1,0),
-                                  new Vector2(0,1),new Vector2(0,-1),
-                                  new Vector2(1,1),new Vector2(-1,1),
-                                  new Vector2(1,-1),new Vector2(-1,-1)};
+                                                   new Vector2(0,1),new Vector2(0,-1),
+                                                   new Vector2(1,1),new Vector2(-1,-1),
+                                                   new Vector2(-1,1),new Vector2(1,-1)};
         foreach(Vector2 direction in directions)
         {
             Vector2 testPosition=unitPosition+direction;
@@ -114,13 +114,9 @@ public class Unit : MonoBehaviour
                     {
                         unitBaseMovement=0;
                     }
-                    GridNode testNode=LevelGrid.Instance.GetNodeAtPosition(testPosition);
-                    NodeType nodeType=testNode.GetNodeType();
-                    if(!walkableNodeTypeList.Contains(nodeType))
-                    {
-                        unitBaseMovement=0;
-                    }
                     validMovementPositions.Add(testPosition);
+                    GridNode testNode=LevelGrid.Instance.GetNodeAtPosition(testPosition);
+                    NodeType nodeType=testNode.GetNodeType(); 
                     switch(nodeType)
                     {
                         case NodeType.Grassland:
@@ -141,11 +137,13 @@ public class Unit : MonoBehaviour
 
                     }
                     
+                    
                 }
                 else
                 {
                     unitBaseMovement=0;
                 }
+                
                 testPosition+=direction;
             }
             unitBaseMovement=movementRange;
