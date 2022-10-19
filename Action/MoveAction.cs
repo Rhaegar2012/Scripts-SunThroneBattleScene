@@ -14,6 +14,7 @@ public class MoveAction : BaseAction
     private Vector2 targetPosition;
     private int currentIndex;
     private List<GridNode> pathList;
+    private float distanceToTargetNode;
     // Start is called before the first frame update
     void Start()
     {
@@ -70,37 +71,7 @@ public class MoveAction : BaseAction
                 continue;
             }
             validGridPositionList.Add(position);
-
         }
-        /*for(int x=-movementRange;x<=movementRange;x++)
-        {
-            for(int y=-movementRange;y<=movementRange;y++)
-            {
-                Vector2 offsetGridPosition= new Vector2(x,y);
-                Vector2 testGridPosition=unitGridPosition+offsetGridPosition;
-                if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
-                {
-                    continue;
-                }
-                GridNode testNode= LevelGrid.Instance.GetNodeAtPosition(testGridPosition);
-                NodeType testNodeType= testNode.GetNodeType();
-                List<NodeType> walkableNodeTypes= unit.GetWalkableNodeTypeList();
-                if(testGridPosition==unitGridPosition)
-                {
-                    continue;
-                }
-                if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
-                {
-                    continue;
-                }
-                if(!walkableNodeTypes.Contains(testNodeType))
-                {
-                    continue;
-                }
-                validGridPositionList.Add(testGridPosition);
-                
-            }
-        }*/
         Debug.Log($"Valid Grid position count{validGridPositionList.Count}");
         return validGridPositionList;
     }
@@ -128,12 +99,12 @@ public class MoveAction : BaseAction
         //Checks if there is an enemy in this position to be attacked
         AttackAction attackAction=unit.GetAction("Attack") as AttackAction;
         int enemyCount=attackAction.GetTargetCountAtPosition(gridPosition);
-        Debug.Log($"Enemy count {enemyCount}");
         if(enemyCount==0)
         {
+            distanceToTargetNode=Vector2.Distance(unit.GetUnitPosition(),gridPosition);
             return new EnemyAIAction
             {
-                actionValue=10,
+                actionValue=(int)distanceToTargetNode*5,
                 gridPosition=gridPosition
             };
         }
