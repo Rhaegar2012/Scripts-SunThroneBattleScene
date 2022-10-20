@@ -20,6 +20,7 @@ public class GridNode
     private GridSystem gridSystem;
     private NodeType nodeType;
     private List<Unit> unitList;
+    private List<Target> targetList;
     private int gCost;
     private int hCost;
     private int fCost;
@@ -49,9 +50,32 @@ public class GridNode
     {
         unitList.Remove(unit);
     }
+    public void AddTarget(Target target)
+    {
+        targetList.Add(target);
+    }
+    public void RemoveTarget(Target target)
+    {
+        targetList.Remove(target);
+    }
+    public bool HasAnyTarget()
+    {
+        return targetList.Count>0;
+    }
     public bool HasAnyUnit()
     {
         return unitList.Count>0;
+    }
+    public Target GetTarget()
+    {
+        if(HasAnyTarget())
+        {
+            return targetList[0];
+        }
+        else
+        {
+            return null;
+        }
     }
     public Unit GetUnit()
     {

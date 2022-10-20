@@ -60,23 +60,42 @@ public class LevelGrid : MonoBehaviour
         node.AddUnit(unit);
 
     }
+    public void SetTargetAtGridNode(Vector2 gridPosition,Target target)
+    {
+        GridNode node= GetNodeAtPosition(gridPosition);
+        node.AddTarget(target);
+    }
     public Unit GetUnitAtGridNode(Vector2 gridPosition)
     {
         GridNode node= GetNodeAtPosition(gridPosition);
         Unit unit=node.GetUnit();
         return unit;
     }
+    public Target GetTargetAtGridNode(Vector2 gridPosition)
+    {
+        GridNode node = GetNodeAtPosition(gridPosition);
+        return node.GetTarget();
+    }
     public bool HasAnyUnitAtGridNode(Vector2 gridPosition)
     {
-        
         GridNode node= GetNodeAtPosition(gridPosition);
         return node.HasAnyUnit();
+    }
+    public bool HasAnyTargetAtGridNode(Vector2 gridPosition)
+    {
+        GridNode node=GetNodeAtPosition(gridPosition);
+        return node.HasAnyTarget();
     }
     public void RemoveUnitAtGridNode(Vector2 gridPosition,Unit unit)
     {
         GridNode node= GetNodeAtPosition(gridPosition);
         node.RemoveUnit(unit);
 
+    }
+    public void RemoveTargetAtGridNode(Vector2 gridPosition,Target target)
+    {
+        GridNode node= GetNodeAtPosition(gridPosition);
+        node.RemoveTarget(target);
     }
     public void MoveUnitGridPosition(Unit unit, Vector2 startPosition,Vector2 targetPosition)
     {

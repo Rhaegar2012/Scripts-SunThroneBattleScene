@@ -12,7 +12,8 @@ public class Target : MonoBehaviour
     private TargetType targetType;
     private bool isCaptured;
     [SerializeField] private int captureActionsRequired;
-    public void ExecuteCaptureAction()
+    [SerializeField] private bool isEnemy;
+    public void ExecuteCapture()
     {
         captureActionsRequired--;
     }
@@ -24,6 +25,10 @@ public class Target : MonoBehaviour
         }
         return false;
 
+    }
+    public bool IsEnemyTarget()
+    {
+        return isEnemy;
     }
     public void SetTargetGridPosition(Vector2 targetGridPosition)
     {

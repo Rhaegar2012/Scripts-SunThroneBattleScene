@@ -11,6 +11,7 @@ public class UnitManager : MonoBehaviour
     public event EventHandler<string> OnArmyDestroyed;
     //Fields
     [SerializeField] Transform unitPrefab;
+    [SerializeField] Transform targetPrefab;
     [SerializeField] BattleSceneSO battleSO;
     [Header("Unit Sprites-Player")]
     [SerializeField] Sprite playerInfantrySprite;
@@ -24,6 +25,7 @@ public class UnitManager : MonoBehaviour
     private List<Unit> currentUnitList;
     private List<Unit> friendlyUnitList;
     private List<Unit> enemyUnitList;
+    private List<Target> targetList; 
     private bool isArmyDestroyed=false;
     private void Awake()
     {
@@ -37,6 +39,7 @@ public class UnitManager : MonoBehaviour
         currentUnitList= new List<Unit>();
         friendlyUnitList=new List<Unit>();
         enemyUnitList= new List<Unit>();
+        targetList= new List<Target>();
     }
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,9 @@ public class UnitManager : MonoBehaviour
         List<UnitType> enemyUnitTypeList= new List<UnitType>();
         List<Vector2> playerUnitPositions = new List<Vector2>();
         List<Vector2> enemyUnitPositions = new List<Vector2>();
+        List<Target> playerTargetList= new List<Target>();
+        List<Vector2> playerTargetPositionList=new List<Vector2>();
+
         //Read battle subscriptable object
         battleSO.GetBattleUnits(out playerUnitTypeList, out enemyUnitTypeList);
         battleSO.GetBattleStartingPositions(out playerUnitPositions, out enemyUnitPositions);
@@ -109,6 +115,10 @@ public class UnitManager : MonoBehaviour
                 }
             }
         currentUnitList=friendlyUnitList;
+        if(playerTargetList.Count<0)
+        {
+
+        }
 
     }
 
