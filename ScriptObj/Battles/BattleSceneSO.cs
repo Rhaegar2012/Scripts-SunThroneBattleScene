@@ -13,7 +13,7 @@ public class BattleSceneSO : ScriptableObject
     [SerializeField] private List<UnitType> enemyArmyUnits;
     [SerializeField] private List<Vector2> enemyArmyPositions;
     [Header("Targets")]
-    [SerializeField] private List<Target> playerTargetList;
+    [SerializeField] private List<Transform> playerTargetList;
     [SerializeField] private List<Vector2> playerTargetPositions;
 
     public void GetBattleUnits(out List<UnitType> playerUnits,out List<UnitType> enemyUnits)
@@ -28,7 +28,7 @@ public class BattleSceneSO : ScriptableObject
          enemyPositions=enemyArmyPositions;
     }
 
-    public List<Target> GetTargetList()
+    public List<Transform> GetTargetList()
     {
           return playerTargetList;
     }

@@ -48,12 +48,15 @@ public class UnitManager : MonoBehaviour
         List<UnitType> enemyUnitTypeList= new List<UnitType>();
         List<Vector2> playerUnitPositions = new List<Vector2>();
         List<Vector2> enemyUnitPositions = new List<Vector2>();
-        List<Target> playerTargetList= new List<Target>();
+        List<Transform> playerTargetList= new List<Transform>();
         List<Vector2> playerTargetPositionList=new List<Vector2>();
+
 
         //Read battle subscriptable object
         battleSO.GetBattleUnits(out playerUnitTypeList, out enemyUnitTypeList);
         battleSO.GetBattleStartingPositions(out playerUnitPositions, out enemyUnitPositions);
+        playerTargetList=battleSO.GetTargetList();
+        playerTargetPositionList=battleSO.GetTargetPositionList();
         //Event Subscription
         TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
         UnitHealthSystem.OnAnyUnitDestroyed+=HealthSystem_OnAnyUnitDestroyed;
@@ -115,11 +118,19 @@ public class UnitManager : MonoBehaviour
                 }
             }
         currentUnitList=friendlyUnitList;
-        if(playerTargetList.Count<0)
+        if(playerTargetList.Count>0)
         {
+            
+            for(int i=0;i<playerTargetList.Count;i++)
+            {
+                Vector2 targetLocation=playerTargetPositionList[i];
+                GridNode targetGridNode=LevelGrid.Instance.GetNodeAtPosition(targetLocation);
+                Transform newTarget=Instantiate(playerTargetList[i],targetGridNode.GetGridPosition(),Quaternion.identity);
+                Target targetScript=newTarget.GetComponent<Target>();
+                LevelGrid.Instance.SetTargetAtGridNode(targetLocation,targetScript);
+            }
 
         }
-
     }
 
     // Update is called once per frame

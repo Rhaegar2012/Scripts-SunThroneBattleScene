@@ -32,6 +32,7 @@ public class GridNode
         this.position=position;
         this.nodeType=nodeType;
         unitList=new List<Unit>();
+        targetList=new List<Target>();
     }
 
     public Vector2 GetGridPosition()

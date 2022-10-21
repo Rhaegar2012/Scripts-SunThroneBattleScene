@@ -54,6 +54,10 @@ public class CaptureAction : BaseAction
                 {
                     continue;
                 }
+                if(unit.GetUnitType()!=UnitType.Infantry)
+                {
+                    continue;
+                }
                 validGridPositionList.Add(testPosition);
             }
         }

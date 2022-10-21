@@ -24,6 +24,7 @@ public class GridSystemVisual : MonoBehaviour
    [Header("Action Visual")]
    [SerializeField] Transform validMovementNodePrefab;
    [SerializeField] Transform attackNodePrefab;
+   [SerializeField] Transform validCaptureNodePrefab;
    private Transform[,] gridSystemVisualArray;
    private List<Transform> enemyGridVisualsList;
    private void Awake()
@@ -120,6 +121,10 @@ public class GridSystemVisual : MonoBehaviour
                     {
                         continue;
                     }
+                    if(LevelGrid.Instance.HasAnyTargetAtGridNode(testGridPosition))
+                    {
+                        Instantiate(validCaptureNodePrefab,testGridPosition,Quaternion.identity);
+                    }
                     if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
                     {
                         Unit unitAtNode=LevelGrid.Instance.GetUnitAtGridNode(testGridPosition);
@@ -137,7 +142,6 @@ public class GridSystemVisual : MonoBehaviour
                   
                 }
              }
-
         }
       
    }
