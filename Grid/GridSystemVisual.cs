@@ -27,6 +27,7 @@ public class GridSystemVisual : MonoBehaviour
    [SerializeField] Transform validCaptureNodePrefab;
    private Transform[,] gridSystemVisualArray;
    private List<Transform> enemyGridVisualsList;
+   private List<Transform> captureGridVisualsList;
    private void Awake()
    {
         if(Instance!=null)
@@ -44,6 +45,7 @@ public class GridSystemVisual : MonoBehaviour
         gridSystemVisualArray= new Transform[LevelGrid.Instance.GetWidth(),LevelGrid.Instance.GetHeight()];
         //EnemyGriddVisualList
         enemyGridVisualsList= new List<Transform>();
+        captureGridVisualsList= new List<Transform>();
         //Subscribed events 
         UnitActionSystem.Instance.OnSelectedUnitChanged+=UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnDeselectedUnit+=UnitActionSystem_OnDeselectedUnit;
@@ -123,7 +125,8 @@ public class GridSystemVisual : MonoBehaviour
                     }
                     if(LevelGrid.Instance.HasAnyTargetAtGridNode(testGridPosition))
                     {
-                        Instantiate(validCaptureNodePrefab,testGridPosition,Quaternion.identity);
+                       Transform captureGridVisual=Instantiate(validCaptureNodePrefab,testGridPosition,Quaternion.identity);
+                       captureGridVisualsList.Add(captureGridVisual);
                     }
                     if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
                     {
@@ -195,6 +198,11 @@ public class GridSystemVisual : MonoBehaviour
         {
             Destroy(enemyVisual.gameObject);
         }
+        foreach(Transform captureVisual in captureGridVisualsList)
+        {
+            Destroy(captureVisual.gameObject);
+        }
+        captureGridVisualsList.Clear();
         enemyGridVisualsList.Clear();
    }
 

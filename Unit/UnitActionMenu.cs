@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class UnitActionMenu : MonoBehaviour
 {
     //Fields
-    [SerializeField] private GameObject actionMenu;
+    [SerializeField] private Transform actionMenu;
+    [SerializeField] private Transform captureButton;
     private bool isActive=false;
+    private Unit selectedUnit;
     void Start()
     {
         UnitActionSystem.Instance.OnActionPositionSelected+=UnitActionSystem_OnActionPositionSelected;
@@ -17,12 +19,27 @@ public class UnitActionMenu : MonoBehaviour
     public void UnitActionSystem_OnActionPositionSelected(object sender, EventArgs empty)
     {
         isActive=!isActive;
-        actionMenu.SetActive(isActive);
+        selectedUnit=UnitActionSystem.Instance.GetSelectedUnit();
+        ShowActionMenu(isActive);
+        
+    }
+    public void ShowActionMenu(bool isActive)
+    {
+        actionMenu.gameObject.SetActive(isActive);
+        if(selectedUnit.GetUnitType()==UnitType.Infantry)
+        {
+            captureButton.gameObject.SetActive(isActive);   
+        }
+        else
+        {
+            captureButton.gameObject.SetActive(!isActive);
+        }
+
     }
     public void CancelActionMenu()
     {
         isActive=!isActive;
-        actionMenu.SetActive(isActive);
+        actionMenu.gameObject.SetActive(isActive);
         UnitSelector.Instance.SetSelectorActive(true);
     }
     

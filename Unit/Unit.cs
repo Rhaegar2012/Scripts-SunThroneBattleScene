@@ -153,7 +153,9 @@ public class Unit : MonoBehaviour
     }
     public BaseAction GetAction(string actionName)
     {
+        Debug.Log(actionName);
         BaseAction selectedAction= Array.Find(actionList,action=>action.GetActionName()==actionName);
+        Debug.Log($"Selected Action {selectedAction.GetActionName()}");
         return selectedAction;
     }
     public BaseAction[] GetActionArray()

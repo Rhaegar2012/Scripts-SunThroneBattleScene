@@ -12,7 +12,7 @@ public class Target : MonoBehaviour
     private TargetType targetType;
     private bool isCaptured;
     [SerializeField] private int captureActionsRequired;
-    [SerializeField] private bool isEnemy;
+    [SerializeField] private bool isEnemy=true;
     public void ExecuteCapture()
     {
         captureActionsRequired--;

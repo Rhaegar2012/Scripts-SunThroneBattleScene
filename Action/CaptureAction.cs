@@ -9,8 +9,10 @@ public class CaptureAction : BaseAction
     Target target;
     private void Update()
     {
+        
         if(isActive)
         {
+            Debug.Log(GetActionName());
             if(!target.IsTargetCaptured())
             {
                 target.ExecuteCapture();
