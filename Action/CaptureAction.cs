@@ -6,12 +6,20 @@ using UnityEngine;
 
 public class CaptureAction : BaseAction
 {
-    Target target;
+    private Target target;
+    private BaseAction moveAction;
+    protected override void Awake()
+    {
+        base.Awake();
+        moveAction=GetComponent<MoveAction>();
+        
+    }
     private void Update()
     {
         
         if(isActive)
         {
+            Debug.Log("Capture Action Taken");
             Debug.Log(GetActionName());
             if(!target.IsTargetCaptured())
             {
@@ -48,15 +56,7 @@ public class CaptureAction : BaseAction
                     continue;
                 }
                 Target target=LevelGrid.Instance.GetTargetAtGridNode(testPosition);
-                if(target.IsEnemyTarget()==unit.IsEnemy())
-                {
-                    continue;
-                }
                 if(target.IsTargetCaptured())
-                {
-                    continue;
-                }
-                if(unit.GetUnitType()!=UnitType.Infantry)
                 {
                     continue;
                 }
@@ -88,7 +88,11 @@ public class CaptureAction : BaseAction
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
-        if(GetValidGridPositionList().Contains(gridPosition))
+        if(unit.GetUnitPosition()!=gridPosition)
+        {
+            moveAction.TakeAction(gridPosition,onActionComplete);
+        }
+        if(target==null)
         {
             target=LevelGrid.Instance.GetTargetAtGridNode(gridPosition);
         }

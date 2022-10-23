@@ -56,8 +56,7 @@ public class UnitActionSystem : MonoBehaviour
  
     private bool TryHandleUnitSelection()
     {
-        GridNode selectorCurrentNode=UnitSelector.Instance.GetCurrentNode();
-           
+        GridNode selectorCurrentNode=UnitSelector.Instance.GetCurrentNode();      
         if(selectorCurrentNode.HasAnyUnit())
         {
             Unit nodeUnit=selectorCurrentNode.GetUnit();
@@ -100,12 +99,14 @@ public class UnitActionSystem : MonoBehaviour
             actionPosition=UnitSelector.Instance.GetGridPosition();
             if(actionPosition!=selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
             {
-                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
+                
                  UnitSelector.Instance.SetSelectorActive(false);
                  return true;
             }
             if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
             {
+                Debug.Log("Same position called");
+                OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
                 DeselectUnit();
                 return true;
             }
