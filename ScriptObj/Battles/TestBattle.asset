@@ -27,4 +27,4 @@ MonoBehaviour:
   playerTargetList:
   - {fileID: 3749388250365995926, guid: ad50a8db99a9d234d9b00539c59b61e7, type: 3}
   playerTargetPositions:
-  - {x: 0, y: 9}
+  - {x: 0, y: 3}
