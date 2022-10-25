@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 public enum TargetType
 {
     HQ=0,
@@ -11,11 +13,21 @@ public class Target : MonoBehaviour
     private Vector2 targetGridPosition;
     private TargetType targetType;
     private bool isCaptured;
+    private SpriteRenderer spriteRenderer;
+    private Color playerColor=Color.blue;
+    private Color enemyColor=Color.red;
+    private Unit captureUnit;
     [SerializeField] private int captureActionsRequired;
-    [SerializeField] private bool isEnemy=true;
+    [SerializeField] private TextMeshProUGUI turnsToCaptureText;
+    private void Awake()
+    {
+        UpdateTurnsToCaptureText();
+        spriteRenderer=GetComponentInChildren<SpriteRenderer>();
+    }
     public void ExecuteCapture()
     {
         captureActionsRequired--;
+        UpdateTurnsToCaptureText();
     }
     public bool IsTargetCaptured()
     {
@@ -26,10 +38,7 @@ public class Target : MonoBehaviour
         return false;
 
     }
-    public bool IsEnemyTarget()
-    {
-        return isEnemy;
-    }
+   
     public void SetTargetGridPosition(Vector2 targetGridPosition)
     {
         this.targetGridPosition=targetGridPosition;
@@ -37,6 +46,20 @@ public class Target : MonoBehaviour
     public Vector2 GetTargetGridPosition()
     {
         return targetGridPosition;
+    }
+
+    private void UpdateTurnsToCaptureText()
+    {
+        turnsToCaptureText.text=captureActionsRequired.ToString();
+    }
+    private void UpdateCaptureColor()
+    {
+        if(captureUnit.IsEnemy())
+        {
+
+        }
+
+
     }
 
 }

@@ -99,15 +99,16 @@ public class UnitActionSystem : MonoBehaviour
             actionPosition=UnitSelector.Instance.GetGridPosition();
             if(actionPosition!=selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
             {
-                
+
+                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
                  UnitSelector.Instance.SetSelectorActive(false);
                  return true;
             }
             if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
             {
-                Debug.Log("Same position called");
+            
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
-                DeselectUnit();
+                UnitSelector.Instance.SetSelectorActive(false);
                 return true;
             }
             int testDistance= Mathf.Abs((int)actionPosition.x)+Mathf.Abs((int)actionPosition.y);
@@ -130,9 +131,10 @@ public class UnitActionSystem : MonoBehaviour
         Vector2 unitSelectorActionNodePosition = UnitSelector.Instance.GetGridPosition();
         if(selectedUnit!=null)
         {
-            
+         
             if(baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
             {
+                
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
                 UnitSelector.Instance.SetSelectorActive(true);

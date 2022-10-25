@@ -24,11 +24,9 @@ public class CaptureAction : BaseAction
             if(!target.IsTargetCaptured())
             {
                 target.ExecuteCapture();
-            }
-            else
-            {
                 ActionComplete();
             }
+            
 
         }
 
@@ -96,7 +94,15 @@ public class CaptureAction : BaseAction
         {
             target=LevelGrid.Instance.GetTargetAtGridNode(gridPosition);
         }
-        ActionStart(onActionComplete);
+        if(!target.IsTargetCaptured())
+        {
+            ActionStart(onActionComplete);
+        }
+        else
+        {
+            ActionComplete();
+        }
+        
 
     }
     

@@ -73,6 +73,7 @@ public class UnitSelector : MonoBehaviour
     }
     public bool MakeSelection()
     {
+        
         return selectorKeyActive;
     }
     public void SwitchSelectorStatus()
