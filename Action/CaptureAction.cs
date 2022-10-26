@@ -23,7 +23,8 @@ public class CaptureAction : BaseAction
             Debug.Log(GetActionName());
             if(!target.IsTargetCaptured())
             {
-                target.ExecuteCapture();
+                target.ExecuteCapture(unit);
+                unit.SetCompletedAction(true);
                 ActionComplete();
             }
             

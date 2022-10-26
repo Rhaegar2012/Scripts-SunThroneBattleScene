@@ -29,9 +29,13 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.OnArmyDestroyed+=UnitManager_OnArmyDestroyed;
         TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
         UnitHealthSystem.OnAnyUnitDestroyed+=UnitHealthSystem_OnAnyUnitDestroyed;
+        Target.OnTargetCaptured+=Target_OnTargetCaptured;
     }
 
- 
+    public void Target_OnTargetCaptured(object sender, EventArgs empty)
+    {
+        EndLevel("Enemy");
+    }
     public void UnitManager_OnArmyDestroyed(object sender, string army)
     {
         Debug.Log("End Level event called");
@@ -46,7 +50,7 @@ public class BattleManager : MonoBehaviour
     }
     public void UnitHealthSystem_OnAnyUnitDestroyed(object sender, Unit unit)
     {
-        if(TurnSystem.Instance.IsPlayerTurn())
+        if(unit.IsEnemy())
         {
             enemyAttrition++;
 

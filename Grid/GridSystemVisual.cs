@@ -123,7 +123,7 @@ public class GridSystemVisual : MonoBehaviour
                     {
                         continue;
                     }
-                    if(LevelGrid.Instance.HasAnyTargetAtGridNode(testGridPosition))
+                    if(LevelGrid.Instance.HasAnyTargetAtGridNode(testGridPosition)&&selectedUnit.GetUnitType()==UnitType.Infantry)
                     {
                        Transform captureGridVisual=Instantiate(validCaptureNodePrefab,testGridPosition,Quaternion.identity);
                        captureGridVisualsList.Add(captureGridVisual);

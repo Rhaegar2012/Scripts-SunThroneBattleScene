@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ public enum TargetType
 }
 public class Target : MonoBehaviour
 {
+    //Events
+    public static event EventHandler OnTargetCaptured;
+    //Fields
     private Vector2 targetGridPosition;
     private TargetType targetType;
     private bool isCaptured;
@@ -24,10 +28,16 @@ public class Target : MonoBehaviour
         UpdateTurnsToCaptureText();
         spriteRenderer=GetComponentInChildren<SpriteRenderer>();
     }
-    public void ExecuteCapture()
+    public void ExecuteCapture(Unit unit)
     {
+        captureUnit=unit;
         captureActionsRequired--;
         UpdateTurnsToCaptureText();
+        if(captureActionsRequired<=0)
+        {
+            OnTargetCaptured?.Invoke(this,EventArgs.Empty);
+            UpdateCaptureColor();
+        }
     }
     public bool IsTargetCaptured()
     {
@@ -56,9 +66,13 @@ public class Target : MonoBehaviour
     {
         if(captureUnit.IsEnemy())
         {
+            spriteRenderer.color=enemyColor;
 
         }
-
+        else
+        {
+            spriteRenderer.color=playerColor;
+        }
 
     }
 
