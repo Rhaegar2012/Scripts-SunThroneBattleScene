@@ -60,6 +60,13 @@ public class UnitManager : MonoBehaviour
         //Event Subscription
         TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
         UnitHealthSystem.OnAnyUnitDestroyed+=HealthSystem_OnAnyUnitDestroyed;
+        //Transform parents
+        GameObject playerUnitParent=new GameObject("Player Units");
+        GameObject enemyUnitParent= new GameObject("Enemy Units");
+        GameObject targetParent= new GameObject("Targets");
+        Transform playerUnitParentTransform=playerUnitParent.transform;
+        Transform enemyUnitParentTransform=enemyUnitParent.transform;
+        Transform targetParentTransform=targetParent.transform;
         //Place Player Units
         if(playerUnitTypeList.Count>0 && playerUnitPositions.Count>0 &&playerUnitTypeList.Count==playerUnitPositions.Count)
             {
@@ -67,7 +74,7 @@ public class UnitManager : MonoBehaviour
                 {
                     UnitType unitType= playerUnitTypeList[i];
                     GridNode unitGridNode= LevelGrid.Instance.GetNodeAtPosition(playerUnitPositions[i]);
-                    Transform newUnit= Instantiate(unitPrefab,unitGridNode.GetGridPosition(),Quaternion.identity);
+                    Transform newUnit= Instantiate(unitPrefab,unitGridNode.GetGridPosition(),Quaternion.identity,playerUnitParentTransform);
                     Unit unitScript= newUnit.GetComponent<Unit>(); 
                     switch(unitType)
                     {
@@ -96,7 +103,7 @@ public class UnitManager : MonoBehaviour
                 {
                     UnitType unitType= enemyUnitTypeList[i];
                     GridNode unitGridNode= LevelGrid.Instance.GetNodeAtPosition(enemyUnitPositions[i]);
-                    Transform newUnit= Instantiate(unitPrefab,unitGridNode.GetGridPosition(),Quaternion.identity);
+                    Transform newUnit= Instantiate(unitPrefab,unitGridNode.GetGridPosition(),Quaternion.identity,enemyUnitParentTransform);
                     Unit unitScript= newUnit.GetComponent<Unit>(); 
                     switch(unitType)
                     {
@@ -125,7 +132,7 @@ public class UnitManager : MonoBehaviour
             {
                 Vector2 targetLocation=playerTargetPositionList[i];
                 GridNode targetGridNode=LevelGrid.Instance.GetNodeAtPosition(targetLocation);
-                Transform newTarget=Instantiate(playerTargetList[i],targetGridNode.GetGridPosition(),Quaternion.identity);
+                Transform newTarget=Instantiate(playerTargetList[i],targetGridNode.GetGridPosition(),Quaternion.identity,targetParentTransform);
                 Target targetScript=newTarget.GetComponent<Target>();
                 LevelGrid.Instance.SetTargetAtGridNode(targetLocation,targetScript);
             }

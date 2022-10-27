@@ -19,8 +19,7 @@ public class CaptureAction : BaseAction
         
         if(isActive)
         {
-            Debug.Log("Capture Action Taken");
-            Debug.Log(GetActionName());
+            
             if(!target.IsTargetCaptured())
             {
                 target.ExecuteCapture(unit);

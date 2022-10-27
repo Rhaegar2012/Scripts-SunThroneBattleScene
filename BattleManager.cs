@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    private int turnsTaken;
-    private int playerAttrition;
-    private int enemyAttrition;
+    private int turnsTaken=0;
+    private int playerAttrition=0;
+    private int enemyAttrition=0;
     private float turnRatio;
     private float playerAttritionRatio;
     private float enemyAttritionRatio;
@@ -17,9 +17,9 @@ public class BattleManager : MonoBehaviour
     [Header("Agility Metrics")]
     [SerializeField] private  int maxTurnsForBattle;
     [Header("Tactics Metrics")]
-    [SerializeField] private int maxPlayerAttritionForBattle;
+    [SerializeField] private int playerUnitsDestroyed;
     [Header("Dominance Metrics")]
-    [SerializeField] private int minEnemyDestructionRatioForBattle;
+    [SerializeField] private int enemyUnitsDestroyed;
     // Start is called before the first frame update
     //Events
     public static event EventHandler<PlayerScore> OnLevelFinished;
@@ -78,7 +78,7 @@ public class BattleManager : MonoBehaviour
     }
     private void CalculateTacticsScore()
     {
-        float attritionRatio=playerAttrition/maxPlayerAttritionForBattle;
+        float attritionRatio=(float)playerAttrition/(float)playerUnitsDestroyed;
         if(attritionRatio<0.2f)
         {
             tacticsSliderScore=1f;
@@ -95,7 +95,8 @@ public class BattleManager : MonoBehaviour
     }
     private void CalculateAgilityScore()
     {
-        float turnRatio=turnsTaken/maxTurnsForBattle;
+
+        float turnRatio=(float)turnsTaken/(float)maxTurnsForBattle;
         if(turnRatio<0.2f)
         {
             agilitySliderScore=1f;
@@ -112,7 +113,8 @@ public class BattleManager : MonoBehaviour
     }
     private void CalculateDominanceScore()
     {
-        float dominanceRatio= minEnemyDestructionRatioForBattle/enemyAttrition;
+      
+        float dominanceRatio= (float)enemyAttrition/(float)enemyUnitsDestroyed;
         if(dominanceRatio>0.75f)
         {
             dominanceSliderScore=1f;

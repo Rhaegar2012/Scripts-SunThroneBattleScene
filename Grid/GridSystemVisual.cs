@@ -28,6 +28,8 @@ public class GridSystemVisual : MonoBehaviour
    private Transform[,] gridSystemVisualArray;
    private List<Transform> enemyGridVisualsList;
    private List<Transform> captureGridVisualsList;
+   private Transform mapTilesTransform;
+   private Transform movementTilesTransform;
    private void Awake()
    {
         if(Instance!=null)
@@ -50,6 +52,11 @@ public class GridSystemVisual : MonoBehaviour
         UnitActionSystem.Instance.OnSelectedUnitChanged+=UnitActionSystem_OnSelectedUnitChanged;
         UnitActionSystem.Instance.OnDeselectedUnit+=UnitActionSystem_OnDeselectedUnit;
         MoveAction.OnAnyUnitMoved+=MoveAction_OnAnyUnitMoved;
+        //Object Parents
+        GameObject mapTiles= new GameObject("Map Tiles");
+        GameObject movementTiles= new GameObject("Movement Tiles");
+        mapTilesTransform=mapTiles.transform;
+        movementTilesTransform=movementTiles.transform;
         //Creates visualGrid singles
         for(int x=0;x<LevelGrid.Instance.GetWidth();x++)
         {
@@ -61,23 +68,23 @@ public class GridSystemVisual : MonoBehaviour
                 switch(nodeType)
                 {
                     case NodeType.Grassland:
-                        nodeVisual= Instantiate(grassNodePrefab,gridPosition,Quaternion.identity);
+                        nodeVisual= Instantiate(grassNodePrefab,gridPosition,Quaternion.identity,mapTilesTransform);
                         break;
                     case NodeType.Forest:
-                        nodeVisual= Instantiate(forestNodePrefab,gridPosition,Quaternion.identity);
+                        nodeVisual= Instantiate(forestNodePrefab,gridPosition,Quaternion.identity,mapTilesTransform);
                         break;
                     case NodeType.Mountain:
-                        nodeVisual= Instantiate(mountainNodePrefab,gridPosition,Quaternion.identity);
+                        nodeVisual= Instantiate(mountainNodePrefab,gridPosition,Quaternion.identity,mapTilesTransform);
                         break;
                     case NodeType.River:
-                        nodeVisual= Instantiate(riverNodePrefab,gridPosition,Quaternion.identity);
+                        nodeVisual= Instantiate(riverNodePrefab,gridPosition,Quaternion.identity,mapTilesTransform);
                         break;
                     case NodeType.Road:
-                        nodeVisual= Instantiate(roadNodePrefab,gridPosition,Quaternion.identity);
+                        nodeVisual= Instantiate(roadNodePrefab,gridPosition,Quaternion.identity,mapTilesTransform);
                         break;
                 }
                 //Valid Movement transform
-                Transform visualSingle=Instantiate(validMovementNodePrefab,gridPosition,Quaternion.identity) as Transform;
+                Transform visualSingle=Instantiate(validMovementNodePrefab,gridPosition,Quaternion.identity,movementTilesTransform) as Transform;
                 gridSystemVisualArray[x,y]=visualSingle;
                 SpriteRenderer renderer=visualSingle.GetComponentInChildren<SpriteRenderer>();
                 renderer.enabled=false;
