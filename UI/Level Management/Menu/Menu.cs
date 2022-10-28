@@ -31,6 +31,7 @@ public abstract class Menu<T>:Menu where T:Menu<T>
 public abstract class Menu:MonoBehaviour
 {
     private int mainLevelIndex=0;
+    protected GameObject firstSelectedButton;
     public void OnQuitPressed()
     {
         Application.Quit();
@@ -48,6 +49,10 @@ public abstract class Menu:MonoBehaviour
     {
         //Placeholder method for event subscription
 
+    }
+    public GameObject GetFirstSelectedButton()
+    {
+        return firstSelectedButton;
     }
 }
 

@@ -13,6 +13,7 @@ public class LevelSelectionMenu:Menu<LevelSelectionMenu>
     [SerializeField] private TextMeshProUGUI missionDescriptionText;
     [SerializeField] private Image missionImageThumbnail;
     [SerializeField] private LevelSelectionMenu levelSelectionMenu;
+    [SerializeField] private GameObject selectedButton;
     protected override void Awake()
     {
         base.Awake();
@@ -44,6 +45,10 @@ public class LevelSelectionMenu:Menu<LevelSelectionMenu>
         missionTitleText.text=currentMission.MissionTitle;
         missionDescriptionText.text=currentMission.MissionDescription;
         missionImageThumbnail.sprite=currentMission.MissionThumbnail;
+    }
+    public void SetFirstSelectedButton()
+    {
+        base.firstSelectedButton=selectedButton;
     }
 
 }

@@ -14,6 +14,7 @@ public class LevelCompleteScreen : Menu<LevelCompleteScreen>
     [SerializeField] private Sprite bronzeMedalSprite;
     [SerializeField] private Sprite silverMedalSprite;
     [SerializeField] private Sprite goldMedalSprite;
+    [SerializeField] private GameObject selectedButton;
     public override void SubscribeToEvents ()
     {
         Debug.Log("Accessed subscription method");
@@ -50,6 +51,10 @@ public class LevelCompleteScreen : Menu<LevelCompleteScreen>
         UpdateScoreSlider(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
         DisplayRankBadge(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
         Open();
+    }
+    public void SetFirstSelectedButton()
+    {
+        base.firstSelectedButton=selectedButton;
     }
 
     

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameOverScreen gameOverScreenPrefab;
     [SerializeField] private MainMenu mainMenuPrefab;
     [SerializeField] private LevelSelectionMenu levelSelectionPrefab;
+    [SerializeField] private EventSystem eventSystem;
     private Transform menuParent;
     private Stack<Menu> menuStack;
     private int mainMenuIndex=0;
@@ -62,7 +64,9 @@ public class MenuManager : MonoBehaviour
             
             
         }
+        MainMenu.Instance.SetFirstSelectedButton();
         MainMenu.Open();
+        UpdateSelectedButton(MainMenu.Instance.GetFirstSelectedButton());
 
 
     }
@@ -109,6 +113,12 @@ public class MenuManager : MonoBehaviour
         {
             menu.gameObject.SetActive(false);
         }
+    }
+    public void UpdateSelectedButton(GameObject firstSelectedButton)
+    {
+        Debug.Log("called");
+        eventSystem.firstSelectedGameObject=firstSelectedButton;
+
     }
     
 }
