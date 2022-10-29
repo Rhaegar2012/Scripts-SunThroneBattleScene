@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,12 @@ public class MainMenu : Menu<MainMenu>
     public void OnLevelSelectionPressed()
     {
         LevelSelectionMenu.Instance.SetFirstSelectedButton();
-        MenuManager.Instance.UpdateSelectedButton(LevelSelectionMenu.Instance.GetFirstSelectedButton());
+        OnMenuCalled(LevelSelectionMenu.Instance);
         LevelSelectionMenu.Open();
+    }
+    protected override void OnMenuCalled(Menu menuInstance)
+    {
+        base.OnMenuCalled(menuInstance);
     }
 
     public void OnSettingsPressed()

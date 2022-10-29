@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 public abstract class Menu<T>:Menu where T:Menu<T>
 {
     public static T Instance{get;private set;}
+    
     protected virtual void Awake()
     {
         if(Instance!=null)
@@ -32,14 +34,22 @@ public abstract class Menu:MonoBehaviour
 {
     private int mainLevelIndex=0;
     protected GameObject firstSelectedButton;
+    public static event EventHandler<Menu> MenuCalled;
     public void OnQuitPressed()
     {
         Application.Quit();
     }
     public void OnMainMenuPressed()
     {
-        LevelLoader.LoadLevel(mainLevelIndex);
         MainMenu.Open();
+        MainMenu.Instance.SetFirstSelectedButton();
+        OnMenuCalled(MainMenu.Instance);
+        //LevelLoader.LoadLevel(mainLevelIndex);
+        
+    }
+    protected virtual void OnMenuCalled(Menu menuInstance)
+    {
+        MenuCalled?.Invoke(this,menuInstance);
     }
     public void OnLevelSelectionPressed()
     {

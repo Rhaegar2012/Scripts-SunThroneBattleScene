@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
+
 
 public class LevelLoader : MonoBehaviour
 {
     public static LevelLoader Instance{get;private set;}
-    private EventSystem eventSystem;
     private void Awake()
     {
         if(Instance!=null)
@@ -17,7 +16,8 @@ public class LevelLoader : MonoBehaviour
             return;
         }
         Instance=this;
-        eventSystem=FindObjectOfType<EventSystem>();
+       
+        
 
     }
     public static void LoadLevel(int levelIndex)
@@ -28,6 +28,7 @@ public class LevelLoader : MonoBehaviour
     {
         SceneManager.LoadScene(levelName);
     }
+  
 
     public static void ReloadLevel()
     {

@@ -15,7 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameOverScreen gameOverScreenPrefab;
     [SerializeField] private MainMenu mainMenuPrefab;
     [SerializeField] private LevelSelectionMenu levelSelectionPrefab;
-    [SerializeField] private EventSystem eventSystem;
+    private EventSystem eventSystem;
     private Transform menuParent;
     private Stack<Menu> menuStack;
     private int mainMenuIndex=0;
@@ -38,6 +38,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         InitializeMenus();
+        Menu.MenuCalled+=Menu_MenuCalled;
     }
     private void InitializeMenus()
     {
@@ -114,11 +115,21 @@ public class MenuManager : MonoBehaviour
             menu.gameObject.SetActive(false);
         }
     }
-    public void UpdateSelectedButton(GameObject firstSelectedButton)
+    public void Menu_MenuCalled(object sender, Menu menuInstance)
     {
-        Debug.Log("called");
-        eventSystem.firstSelectedGameObject=firstSelectedButton;
-
+        UpdateSelectedButton(menuInstance.GetFirstSelectedButton());
     }
+    public void UpdateSelectedButton(GameObject selectedButton)
+    {
+        if(eventSystem==null)
+        {
+            eventSystem=EventSystem.current;
+        }
+        
+        Debug.Log($"event system name{eventSystem.name}");
+        eventSystem.firstSelectedGameObject=selectedButton;
+        eventSystem.SetSelectedGameObject(selectedButton);
+    }
+   
     
 }
