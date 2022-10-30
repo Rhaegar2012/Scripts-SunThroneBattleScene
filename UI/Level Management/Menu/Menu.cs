@@ -41,11 +41,10 @@ public abstract class Menu:MonoBehaviour
     }
     public void OnMainMenuPressed()
     {
-        MainMenu.Open();
+        LevelLoader.LoadLevel(mainLevelIndex);
         MainMenu.Instance.SetFirstSelectedButton();
         OnMenuCalled(MainMenu.Instance);
-        //LevelLoader.LoadLevel(mainLevelIndex);
-        
+        MainMenu.Open();    
     }
     protected virtual void OnMenuCalled(Menu menuInstance)
     {

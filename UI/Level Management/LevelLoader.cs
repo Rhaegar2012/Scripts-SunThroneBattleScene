@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 
 public class LevelLoader : MonoBehaviour
 {
+    private static EventSystem eventSystem;
     public static LevelLoader Instance{get;private set;}
     private void Awake()
     {
