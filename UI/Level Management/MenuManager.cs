@@ -38,7 +38,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         InitializeMenus();
-        Menu.MenuCalled+=Menu_MenuCalled;
+        //Menu.MenuCalled+=Menu_MenuCalled;
     }
     private void InitializeMenus()
     {
@@ -65,9 +65,9 @@ public class MenuManager : MonoBehaviour
             
             
         }
-        MainMenu.Instance.SetFirstSelectedButton();
+        //MainMenu.Instance.SetFirstSelectedButton();
         MainMenu.Open();
-        UpdateSelectedButton(MainMenu.Instance.GetFirstSelectedButton());
+        //UpdateSelectedButton(MainMenu.Instance.GetFirstSelectedButton());
 
 
     }
@@ -115,7 +115,7 @@ public class MenuManager : MonoBehaviour
             menu.gameObject.SetActive(false);
         }
     }
-    public void Menu_MenuCalled(object sender, Menu menuInstance)
+    /*public void Menu_MenuCalled(object sender, Menu menuInstance)
     {
         UpdateSelectedButton(menuInstance.GetFirstSelectedButton());
     }
@@ -129,7 +129,7 @@ public class MenuManager : MonoBehaviour
         Debug.Log($"event system name{eventSystem.name}");
         eventSystem.firstSelectedGameObject=selectedButton;
         eventSystem.SetSelectedGameObject(selectedButton);
-    }
+    }*/
    
     
 }

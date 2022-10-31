@@ -8,6 +8,7 @@ public class UnitActionMenu : MonoBehaviour
 {
     //Fields
     [SerializeField] private Transform actionMenu;
+    [SerializeField] private Transform defaultButton;
     [SerializeField] private Transform captureButton;
     private bool isActive=false;
     private Unit selectedUnit;
@@ -41,6 +42,11 @@ public class UnitActionMenu : MonoBehaviour
         isActive=!isActive;
         actionMenu.gameObject.SetActive(isActive);
         UnitSelector.Instance.SetSelectorActive(true);
+    }
+
+    public Transform GetDefaultButton()
+    {
+        return defaultButton;
     }
     
 }

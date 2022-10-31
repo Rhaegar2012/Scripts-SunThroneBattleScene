@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ using TMPro;
 
 public class LevelSelectionMenu:Menu<LevelSelectionMenu>
 {
+    //Events
+    public  event EventHandler OnPlayLevelCalled;
+    //Fields
     private MissionSelector missionSelector;
     private MissionSpecs currentMission;
     [SerializeField] private MissionList missionList;
@@ -36,8 +40,12 @@ public class LevelSelectionMenu:Menu<LevelSelectionMenu>
     }
     public void OnPlayLevelPressed()
     {
-        MenuManager.Instance.CloseAllMenus();
+
         LevelLoader.LoadLevel(currentMission.MissionId);
+        StartCoroutine(HoldForLevelLoad());
+        MenuManager.Instance.CloseAllMenus();
+        OnPlayLevelCalled?.Invoke(this,EventArgs.Empty);
+        
     }
     private void UpdateInfo()
     {
@@ -49,6 +57,10 @@ public class LevelSelectionMenu:Menu<LevelSelectionMenu>
     public void SetFirstSelectedButton()
     {
         base.firstSelectedButton=selectedButton;
+    }
+    private IEnumerator HoldForLevelLoad()
+    {
+        yield return null;
     }
 
 }
