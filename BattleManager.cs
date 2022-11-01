@@ -38,7 +38,6 @@ public class BattleManager : MonoBehaviour
     }
     public void UnitManager_OnArmyDestroyed(object sender, string army)
     {
-        Debug.Log("End Level event called");
         EndLevel(army);
     }
     public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
@@ -68,10 +67,13 @@ public class BattleManager : MonoBehaviour
             CalculateAgilityScore();
             CalculateDominanceScore();
             PlayerScore playerScore= new PlayerScore(tacticsSliderScore,dominanceSliderScore,agilitySliderScore);
+            UnitSelector.Instance.SetSelectorActive(false);
             OnLevelFinished?.Invoke(this, playerScore);
         }
         if(army=="Player")
         {
+            UnitSelector.Instance.SetSelectorActive(false);
+            GameOverScreen.Instance.SetFirstSelectedButton();
             GameOverScreen.Open();
         }
 

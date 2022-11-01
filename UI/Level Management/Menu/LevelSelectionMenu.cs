@@ -7,8 +7,7 @@ using TMPro;
 
 public class LevelSelectionMenu:Menu<LevelSelectionMenu>
 {
-    //Events
-    public  event EventHandler OnPlayLevelCalled;
+
     //Fields
     private MissionSelector missionSelector;
     private MissionSpecs currentMission;
@@ -44,7 +43,6 @@ public class LevelSelectionMenu:Menu<LevelSelectionMenu>
         LevelLoader.LoadLevel(currentMission.MissionId);
         StartCoroutine(HoldForLevelLoad());
         MenuManager.Instance.CloseAllMenus();
-        OnPlayLevelCalled?.Invoke(this,EventArgs.Empty);
         
     }
     private void UpdateInfo()

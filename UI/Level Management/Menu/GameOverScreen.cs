@@ -12,5 +12,6 @@ public class GameOverScreen : Menu<GameOverScreen>
    public  void SetFirstSelectedButton()
    {
       base.firstSelectedButton=selectedButton;
+      OnMenuCalled(GameOverScreen.Instance);
    }
 }

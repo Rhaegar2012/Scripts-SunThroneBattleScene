@@ -26,7 +26,6 @@ public class UnitManager : MonoBehaviour
     private List<Unit> friendlyUnitList;
     private List<Unit> enemyUnitList;
     private List<Target> targetList; 
-    private bool isArmyDestroyed=false;
     private void Awake()
     {
         if(Instance!=null)

@@ -50,10 +50,7 @@ public abstract class Menu:MonoBehaviour
     {
         MenuCalled?.Invoke(this,menuInstance);
     }
-    public void OnLevelSelectionPressed()
-    {
-        LevelSelectionMenu.Open();
-    }
+   
     public  virtual void SubscribeToEvents()
     {
         //Placeholder method for event subscription

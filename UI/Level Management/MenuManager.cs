@@ -18,7 +18,6 @@ public class MenuManager : MonoBehaviour
     private EventSystem eventSystem;
     private Transform menuParent;
     private Stack<Menu> menuStack;
-    private int mainMenuIndex=0;
     // Start is called before the first frame update
     void Awake()
     {
@@ -65,9 +64,8 @@ public class MenuManager : MonoBehaviour
             
             
         }
-        //MainMenu.Instance.SetFirstSelectedButton();
         MainMenu.Open();
-        //UpdateSelectedButton(MainMenu.Instance.GetFirstSelectedButton());
+        
 
 
     }
@@ -115,21 +113,7 @@ public class MenuManager : MonoBehaviour
             menu.gameObject.SetActive(false);
         }
     }
-    /*public void Menu_MenuCalled(object sender, Menu menuInstance)
-    {
-        UpdateSelectedButton(menuInstance.GetFirstSelectedButton());
-    }
-    public void UpdateSelectedButton(GameObject selectedButton)
-    {
-        if(eventSystem==null)
-        {
-            eventSystem=EventSystem.current;
-        }
-        
-        Debug.Log($"event system name{eventSystem.name}");
-        eventSystem.firstSelectedGameObject=selectedButton;
-        eventSystem.SetSelectedGameObject(selectedButton);
-    }*/
+    
    
     
 }

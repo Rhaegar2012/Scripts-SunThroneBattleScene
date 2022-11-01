@@ -162,7 +162,7 @@ public class UnitActionSystem : MonoBehaviour
     }
     public void ClearBusy()
     {
-        isBusy=false;
+        this.isBusy=false;
     }
     private void DeselectUnit()
     {

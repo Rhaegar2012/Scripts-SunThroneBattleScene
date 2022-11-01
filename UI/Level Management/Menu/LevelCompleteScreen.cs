@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class LevelCompleteScreen : Menu<LevelCompleteScreen>
 {
+    
+    //Fields
     [SerializeField] private Image tacticsSliderImage;
     [SerializeField] private Image dominanceSliderImage;
     [SerializeField] private Image agilitySliderImage;
@@ -17,7 +19,6 @@ public class LevelCompleteScreen : Menu<LevelCompleteScreen>
     [SerializeField] private GameObject selectedButton;
     public override void SubscribeToEvents ()
     {
-        Debug.Log("Accessed subscription method");
         BattleManager.OnLevelFinished+=BattleManager_OnLevelFinished;
 
     }
@@ -50,7 +51,10 @@ public class LevelCompleteScreen : Menu<LevelCompleteScreen>
     {
         UpdateScoreSlider(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
         DisplayRankBadge(scores.TacticsScore,scores.AgilityScore,scores.DominanceScore);
+        SetFirstSelectedButton();
+        OnMenuCalled(LevelCompleteScreen.Instance);
         Open();
+        
     }
     public void SetFirstSelectedButton()
     {
